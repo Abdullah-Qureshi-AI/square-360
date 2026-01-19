@@ -17,6 +17,7 @@ export default function RealEstateHomePage() {
         "Comprehensive property development services from planning to completion. We handle every aspect of your project with precision and expertise.",
       icon: "🏢",
       stats: "500+ Projects",
+      image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=400&fit=crop",
     },
     {
       title: "Construction Management",
@@ -24,6 +25,7 @@ export default function RealEstateHomePage() {
         "Expert project management ensuring quality, timely delivery, and budget adherence. Your vision, our execution.",
       icon: "🔨",
       stats: "15+ Years Experience",
+      image: "https://images.unsplash.com/photo-1504307651254-35680f893dfe?w=600&h=400&fit=crop",
     },
     {
       title: "Real Estate Consulting",
@@ -31,6 +33,7 @@ export default function RealEstateHomePage() {
         "Strategic advice for your real estate investments and decisions. Data-driven insights for optimal returns.",
       icon: "📊",
       stats: "1000+ Clients",
+      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&h=400&fit=crop",
     },
     {
       title: "Architectural Design",
@@ -38,6 +41,7 @@ export default function RealEstateHomePage() {
         "Innovative and functional architectural solutions. Modern designs that stand the test of time.",
       icon: "📐",
       stats: "Award Winning",
+      image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&h=400&fit=crop",
     },
     {
       title: "Property Management",
@@ -45,6 +49,7 @@ export default function RealEstateHomePage() {
         "Professional property management services for optimal returns and tenant satisfaction.",
       icon: "🔑",
       stats: "24/7 Support",
+      image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&h=400&fit=crop",
     },
     {
       title: "Investment Advisory",
@@ -52,6 +57,7 @@ export default function RealEstateHomePage() {
         "Expert guidance for real estate investment opportunities. Maximize your portfolio potential.",
       icon: "💼",
       stats: "Trusted Partner",
+      image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600&h=400&fit=crop",
     },
   ];
 
@@ -72,6 +78,8 @@ export default function RealEstateHomePage() {
           href: "/real-estate/services",
         }}
         className="border-b-4 border-[#FFD700]"
+        backgroundImage="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&h=1080&fit=crop"
+        imageAlt="Modern building construction"
       />
 
       {/* Features Grid */}
@@ -87,18 +95,29 @@ export default function RealEstateHomePage() {
 
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((feature, index) => (
-            <Card key={index} variant="elevated" hover className="p-8">
-              <div className="text-5xl mb-4">{feature.icon}</div>
-              <h3 className="text-2xl font-bold text-black mb-3">
-                {feature.title}
-              </h3>
-              <p className="text-gray-600 mb-4 leading-relaxed">
-                {feature.description}
-              </p>
-              <div className="pt-4 border-t-2 border-[#FFD700]">
-                <p className="text-sm font-semibold text-black uppercase tracking-wide">
-                  {feature.stats}
+            <Card key={index} variant="elevated" hover className="overflow-hidden">
+              <div className="relative h-48 w-full">
+                <Image
+                  src={feature.image}
+                  alt={feature.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              </div>
+              <div className="p-8">
+                <div className="text-4xl mb-4">{feature.icon}</div>
+                <h3 className="text-2xl font-bold text-black mb-3">
+                  {feature.title}
+                </h3>
+                <p className="text-gray-600 mb-4 leading-relaxed">
+                  {feature.description}
                 </p>
+                <div className="pt-4 border-t-2 border-[#FFD700]">
+                  <p className="text-sm font-semibold text-black uppercase tracking-wide">
+                    {feature.stats}
+                  </p>
+                </div>
               </div>
             </Card>
           ))}

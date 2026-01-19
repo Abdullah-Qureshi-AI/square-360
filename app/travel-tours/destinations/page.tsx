@@ -1,6 +1,7 @@
 import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import Image from "next/image";
 
 export const metadata = {
   title: "Destinations",
@@ -15,6 +16,7 @@ export default function TravelDestinationsPage() {
       description: "Crystal clear waters and pristine beaches await you",
       gradient: "from-cyan-500 to-blue-500",
       price: "From $1,299",
+      image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=600&fit=crop",
     },
     {
       name: "Mountain Adventure",
@@ -22,6 +24,7 @@ export default function TravelDestinationsPage() {
       description: "Breathtaking peaks and alpine experiences",
       gradient: "from-slate-500 to-slate-700",
       price: "From $2,499",
+      image: "https://images.unsplash.com/photo-1464822759844-d150ad6bfb06?w=800&h=600&fit=crop",
     },
     {
       name: "Cultural Journey",
@@ -29,6 +32,7 @@ export default function TravelDestinationsPage() {
       description: "Rich history and vibrant traditions",
       gradient: "from-orange-500 to-red-500",
       price: "From $899",
+      image: "https://images.unsplash.com/photo-1539650116574-75c0c6d73a6e?w=800&h=600&fit=crop",
     },
     {
       name: "Urban Explorer",
@@ -36,6 +40,7 @@ export default function TravelDestinationsPage() {
       description: "Historic cities and modern culture",
       gradient: "from-purple-500 to-pink-500",
       price: "From $1,599",
+      image: "https://images.unsplash.com/photo-1514565131-fce0801e5785?w=800&h=600&fit=crop",
     },
     {
       name: "Safari Experience",
@@ -43,6 +48,7 @@ export default function TravelDestinationsPage() {
       description: "Wildlife encounters and natural wonders",
       gradient: "from-yellow-500 to-orange-500",
       price: "From $3,299",
+      image: "https://images.unsplash.com/photo-1516426122078-c23e76319801?w=800&h=600&fit=crop",
     },
     {
       name: "Island Hopping",
@@ -50,6 +56,7 @@ export default function TravelDestinationsPage() {
       description: "Charming islands and coastal beauty",
       gradient: "from-blue-500 to-cyan-500",
       price: "From $1,899",
+      image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&h=600&fit=crop",
     },
   ];
 
@@ -70,9 +77,15 @@ export default function TravelDestinationsPage() {
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {destinations.map((destination, index) => (
             <Card key={index} variant="elevated" hover className="overflow-hidden">
-              <div
-                className={`h-64 bg-gradient-to-br ${destination.gradient} relative`}
-              >
+              <div className="relative h-64 w-full">
+                <Image
+                  src={destination.image}
+                  alt={destination.name}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+                <div className={`absolute inset-0 bg-gradient-to-br ${destination.gradient} opacity-20`} />
                 <div className="absolute bottom-4 left-4 right-4">
                   <div className="bg-white/90 backdrop-blur-sm rounded-lg p-4">
                     <p className="text-sm font-semibold text-gray-600 mb-1">

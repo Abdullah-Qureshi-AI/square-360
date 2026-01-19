@@ -2,6 +2,7 @@ import { Hero } from "@/components/ui/Hero";
 import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import Image from "next/image";
 
 export const metadata = {
   title: "Home",
@@ -16,6 +17,7 @@ export default function TravelHomePage() {
         "Thrilling adventures for the bold and adventurous traveler. Experience the world like never before.",
       icon: "🏔️",
       gradient: "from-blue-500 to-cyan-500",
+      image: "https://images.unsplash.com/photo-1464822759844-d150ad6bfb06?w=600&h=400&fit=crop",
     },
     {
       title: "Cultural Experiences",
@@ -23,6 +25,7 @@ export default function TravelHomePage() {
         "Immerse yourself in local cultures and traditions. Authentic experiences that enrich your soul.",
       icon: "🎭",
       gradient: "from-purple-500 to-pink-500",
+      image: "https://images.unsplash.com/photo-1539650116574-75c0c6d73a6e?w=600&h=400&fit=crop",
     },
     {
       title: "Beach Getaways",
@@ -30,6 +33,7 @@ export default function TravelHomePage() {
         "Relax and unwind at the world's most beautiful beaches. Paradise is just a booking away.",
       icon: "🏖️",
       gradient: "from-cyan-500 to-blue-500",
+      image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=400&fit=crop",
     },
     {
       title: "City Breaks",
@@ -37,6 +41,7 @@ export default function TravelHomePage() {
         "Explore vibrant cities and urban experiences. Discover hidden gems in the world's greatest metropolises.",
       icon: "🏙️",
       gradient: "from-pink-500 to-rose-500",
+      image: "https://images.unsplash.com/photo-1514565131-fce0801e5785?w=600&h=400&fit=crop",
     },
     {
       title: "Nature & Wildlife",
@@ -44,6 +49,7 @@ export default function TravelHomePage() {
         "Connect with nature and witness incredible wildlife. Unforgettable encounters with the natural world.",
       icon: "🦁",
       gradient: "from-green-500 to-emerald-500",
+      image: "https://images.unsplash.com/photo-1516426122078-c23e76319801?w=600&h=400&fit=crop",
     },
     {
       title: "Luxury Travel",
@@ -51,6 +57,7 @@ export default function TravelHomePage() {
         "Premium travel experiences with world-class service. Indulge in the finest accommodations and experiences.",
       icon: "✨",
       gradient: "from-amber-500 to-orange-500",
+      image: "https://images.unsplash.com/photo-1551884170-09fb70a3a2ed?w=600&h=400&fit=crop",
     },
   ];
 
@@ -71,6 +78,8 @@ export default function TravelHomePage() {
           href: "/travel-tours/tours",
         }}
         className="border-b-4 border-black"
+        backgroundImage="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920&h=1080&fit=crop"
+        imageAlt="Beautiful travel destination"
       />
 
       {/* Features Grid */}
@@ -87,12 +96,18 @@ export default function TravelHomePage() {
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((feature, index) => (
             <Card key={index} variant="elevated" hover className="overflow-hidden">
-              <div
-                className={`h-48 bg-gradient-to-br ${feature.gradient} flex items-center justify-center`}
-              >
-                <div className="text-6xl">{feature.icon}</div>
+              <div className="relative h-48 w-full">
+                <Image
+                  src={feature.image}
+                  alt={feature.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+                <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-30`} />
               </div>
               <div className="p-8">
+                <div className="text-4xl mb-3">{feature.icon}</div>
                 <h3 className="text-2xl font-bold text-black mb-3">
                   {feature.title}
                 </h3>

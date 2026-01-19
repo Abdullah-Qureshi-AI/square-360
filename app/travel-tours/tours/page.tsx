@@ -1,6 +1,7 @@
 import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import Image from "next/image";
 
 export const metadata = {
   title: "Tours",
@@ -16,6 +17,7 @@ export default function TravelToursPage() {
       type: "Adventure",
       description: "Thrilling activities and outdoor adventures",
       gradient: "from-blue-500 to-cyan-500",
+      image: "https://images.unsplash.com/photo-1464822759844-d150ad6bfb06?w=800&h=600&fit=crop",
     },
     {
       title: "Cultural Immersion Tour",
@@ -24,6 +26,7 @@ export default function TravelToursPage() {
       type: "Cultural",
       description: "Deep dive into local cultures and traditions",
       gradient: "from-purple-500 to-pink-500",
+      image: "https://images.unsplash.com/photo-1539650116574-75c0c6d73a6e?w=800&h=600&fit=crop",
     },
     {
       title: "Luxury Beach Retreat",
@@ -32,6 +35,7 @@ export default function TravelToursPage() {
       type: "Luxury",
       description: "Premium beachfront experience",
       gradient: "from-cyan-500 to-blue-500",
+      image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=600&fit=crop",
     },
     {
       title: "City Explorer Package",
@@ -40,6 +44,7 @@ export default function TravelToursPage() {
       type: "City",
       description: "Urban exploration and city highlights",
       gradient: "from-pink-500 to-rose-500",
+      image: "https://images.unsplash.com/photo-1514565131-fce0801e5785?w=800&h=600&fit=crop",
     },
     {
       title: "Wildlife Safari Expedition",
@@ -48,6 +53,7 @@ export default function TravelToursPage() {
       type: "Adventure",
       description: "Unforgettable wildlife encounters",
       gradient: "from-green-500 to-emerald-500",
+      image: "https://images.unsplash.com/photo-1516426122078-c23e76319801?w=800&h=600&fit=crop",
     },
     {
       title: "Romantic Getaway",
@@ -56,6 +62,7 @@ export default function TravelToursPage() {
       type: "Luxury",
       description: "Perfect for couples and honeymooners",
       gradient: "from-amber-500 to-orange-500",
+      image: "https://images.unsplash.com/photo-1551884170-09fb70a3a2ed?w=800&h=600&fit=crop",
     },
   ];
 
@@ -76,9 +83,15 @@ export default function TravelToursPage() {
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {tours.map((tour, index) => (
             <Card key={index} variant="elevated" hover className="overflow-hidden">
-              <div
-                className={`h-48 bg-gradient-to-br ${tour.gradient} relative`}
-              >
+              <div className="relative h-48 w-full">
+                <Image
+                  src={tour.image}
+                  alt={tour.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+                <div className={`absolute inset-0 bg-gradient-to-br ${tour.gradient} opacity-30`} />
                 <div className="absolute top-4 left-4">
                   <span className="bg-black text-white px-3 py-1 rounded-full text-sm font-semibold">
                     {tour.type}

@@ -1,6 +1,7 @@
 import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import Image from "next/image";
 
 export const metadata = {
   title: "Properties",
@@ -16,6 +17,7 @@ export default function RealEstatePropertiesPage() {
       size: "2,500 sq ft",
       price: "$450,000",
       features: ["3 Bedrooms", "2 Bathrooms", "Parking"],
+      image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop",
     },
     {
       title: "Commercial Office Space",
@@ -24,6 +26,7 @@ export default function RealEstatePropertiesPage() {
       size: "5,000 sq ft",
       price: "$850,000",
       features: ["Prime Location", "Modern Facilities", "Parking"],
+      image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=600&fit=crop",
     },
     {
       title: "Luxury Condominium",
@@ -32,6 +35,7 @@ export default function RealEstatePropertiesPage() {
       size: "1,800 sq ft",
       price: "$625,000",
       features: ["Ocean View", "2 Bedrooms", "Balcony"],
+      image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop",
     },
     {
       title: "Development Land",
@@ -40,6 +44,7 @@ export default function RealEstatePropertiesPage() {
       size: "10 acres",
       price: "$1,200,000",
       features: ["Prime Location", "Zoned", "Utilities"],
+      image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&h=600&fit=crop",
     },
     {
       title: "Luxury Villa",
@@ -48,6 +53,7 @@ export default function RealEstatePropertiesPage() {
       size: "4,200 sq ft",
       price: "$1,850,000",
       features: ["5 Bedrooms", "Pool", "Garden"],
+      image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=600&fit=crop",
     },
     {
       title: "Retail Space",
@@ -56,6 +62,7 @@ export default function RealEstatePropertiesPage() {
       size: "3,500 sq ft",
       price: "$750,000",
       features: ["High Traffic", "Corner Location", "Parking"],
+      image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&h=600&fit=crop",
     },
   ];
 
@@ -76,7 +83,14 @@ export default function RealEstatePropertiesPage() {
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {properties.map((property, index) => (
             <Card key={index} variant="elevated" hover className="overflow-hidden">
-              <div className="h-64 bg-gradient-to-br from-gray-200 to-gray-300 relative">
+              <div className="relative h-64 w-full">
+                <Image
+                  src={property.image}
+                  alt={property.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
                 <div className="absolute top-4 left-4">
                   <span className="bg-[#FFD700] text-black px-3 py-1 rounded-full text-sm font-semibold">
                     {property.type}
