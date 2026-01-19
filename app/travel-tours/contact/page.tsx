@@ -58,7 +58,7 @@ export default function TravelContactPage() {
                 </p>
               </Card>
 
-              <Card variant="yellow" className="p-8">
+              <Card variant="default" className="p-8 bg-[#FFD700]">
                 <h3 className="text-xl font-bold text-black mb-4">
                   Why Choose Us?
                 </h3>

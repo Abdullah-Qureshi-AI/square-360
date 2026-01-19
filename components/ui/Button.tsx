@@ -1,6 +1,10 @@
+"use client";
+
 import { ButtonHTMLAttributes, forwardRef } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { easings, durations } from "@/lib/motion";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "outline" | "ghost";
@@ -9,44 +13,99 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   href?: string;
 }
 
+// Button hover animation variants
+const buttonMotion = {
+  rest: { scale: 1 },
+  hover: { 
+    scale: 1.02,
+    transition: {
+      duration: durations.fast,
+      ease: easings.smooth,
+    },
+  },
+  tap: { 
+    scale: 0.98,
+    transition: {
+      duration: 0.1,
+    },
+  },
+};
+
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = "primary", size = "md", asChild, href, children, ...props }, ref) => {
-    const baseStyles = "inline-flex items-center justify-center font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed";
+  ({ className, variant = "primary", size = "md", asChild, href, children, disabled, ...props }, ref) => {
+    const baseStyles = cn(
+      "relative inline-flex items-center justify-center font-semibold",
+      "transition-all duration-[var(--duration-normal)] ease-[var(--ease-elegant)]",
+      "focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
+      "disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none",
+      "overflow-hidden"
+    );
     
     const variants = {
-      primary: "bg-[#FFD700] text-black hover:bg-[#FFC700] focus:ring-[#FFD700]",
-      secondary: "bg-black text-white hover:bg-[#1A1A1A] focus:ring-black",
-      outline: "border-2 border-black text-black hover:bg-black hover:text-white focus:ring-black",
-      ghost: "text-black hover:bg-[#FFF4CC] focus:ring-[#FFD700]",
+      primary: cn(
+        "bg-[var(--color-primary)] text-[var(--color-secondary)]",
+        "hover:bg-[var(--color-primary-hover)]",
+        "focus-visible:ring-[var(--color-primary)]",
+        "shadow-md hover:shadow-lg",
+        "btn-shine" // Premium shine effect from globals.css
+      ),
+      secondary: cn(
+        "bg-[var(--color-secondary)] text-white",
+        "hover:bg-[var(--color-secondary-soft)]",
+        "focus-visible:ring-[var(--color-secondary)]",
+        "shadow-md hover:shadow-lg"
+      ),
+      outline: cn(
+        "border-2 border-[var(--color-secondary)] text-[var(--color-secondary)]",
+        "hover:bg-[var(--color-secondary)] hover:text-white",
+        "focus-visible:ring-[var(--color-secondary)]"
+      ),
+      ghost: cn(
+        "text-[var(--color-secondary)]",
+        "hover:bg-[var(--color-primary-light)]",
+        "focus-visible:ring-[var(--color-primary)]"
+      ),
     };
 
     const sizes = {
-      sm: "px-4 py-2 text-sm rounded-md",
-      md: "px-6 py-3 text-base rounded-lg",
-      lg: "px-8 py-4 text-lg rounded-lg",
+      sm: "px-5 py-2.5 text-sm rounded-lg",
+      md: "px-7 py-3.5 text-base rounded-xl",
+      lg: "px-9 py-4.5 text-lg rounded-xl",
     };
 
     const classes = cn(baseStyles, variants[variant], sizes[size], className);
 
     if (asChild && href) {
       return (
-        <Link href={href} className={classes}>
-          {children}
-        </Link>
+        <motion.div
+          initial="rest"
+          whileHover={disabled ? "rest" : "hover"}
+          whileTap={disabled ? "rest" : "tap"}
+          variants={buttonMotion}
+          className="inline-block"
+        >
+          <Link href={href} className={classes}>
+            <span className="relative z-10">{children}</span>
+          </Link>
+        </motion.div>
       );
     }
 
     return (
-      <button
-        ref={ref}
+      <motion.button
+        ref={ref as React.Ref<HTMLButtonElement>}
         className={classes}
-        {...props}
+        disabled={disabled}
+        initial="rest"
+        whileHover={disabled ? "rest" : "hover"}
+        whileTap={disabled ? "rest" : "tap"}
+        variants={buttonMotion}
+        {...(props as object)}
       >
-        {children}
-      </button>
+        <span className="relative z-10">{children}</span>
+      </motion.button>
     );
   }
 );
 
 Button.displayName = "Button";
-

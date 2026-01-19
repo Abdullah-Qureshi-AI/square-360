@@ -1,19 +1,153 @@
 @import "tailwindcss";
 
+/* ============================================
+   DESIGN SYSTEM - Square Three Sixty
+   ============================================
+   Premium, Agency-Grade Design Tokens
+   Colors: Yellow (accent), Black (structure), White (space)
+   ============================================ */
+
 @layer base {
   :root {
-    /* Brand Colors - Yellow, Black, White */
-    --brand-yellow: #FFD700;
-    --brand-yellow-dark: #FFC700;
-    --brand-yellow-light: #FFF4CC;
-    --brand-black: #000000;
-    --brand-black-soft: #1A1A1A;
-    --brand-white: #FFFFFF;
-    --brand-gray-light: #F5F5F5;
-    --brand-gray: #666666;
-    --brand-gray-dark: #333333;
+    /* ============================================
+       COLOR TOKENS (STRICT)
+       ============================================ */
+    
+    /* Primary - Yellow (Accents, CTAs, Highlights ONLY) */
+    --color-primary: #F7C600;
+    --color-primary-hover: #E5B800;
+    --color-primary-light: #FFF9E6;
+    --color-primary-muted: #F7C600/20;
+    
+    /* Secondary - Black (Structure, Text, Backgrounds) */
+    --color-secondary: #0A0A0A;
+    --color-secondary-soft: #1A1A1A;
+    --color-secondary-muted: #2A2A2A;
+    
+    /* Base - White (Breathing Space) */
+    --color-base: #FFFFFF;
+    --color-base-off: #FAFAFA;
+    --color-base-soft: #F5F5F5;
+    
+    /* Neutral Grays */
+    --color-gray-50: #FAFAFA;
+    --color-gray-100: #F5F5F5;
+    --color-gray-200: #E5E5E5;
+    --color-gray-300: #D4D4D4;
+    --color-gray-400: #A3A3A3;
+    --color-gray-500: #737373;
+    --color-gray-600: #525252;
+    --color-gray-700: #404040;
+    --color-gray-800: #262626;
+    --color-gray-900: #171717;
+    
+    /* ============================================
+       TYPOGRAPHY TOKENS
+       ============================================ */
+    
+    /* Font Families */
+    --font-heading: var(--font-manrope), system-ui, -apple-system, sans-serif;
+    --font-body: var(--font-dm-sans), system-ui, -apple-system, sans-serif;
+    
+    /* Font Sizes - Fluid Typography Scale */
+    --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+    --text-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);
+    --text-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+    --text-lg: clamp(1.125rem, 1rem + 0.625vw, 1.25rem);
+    --text-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);
+    --text-2xl: clamp(1.5rem, 1.25rem + 1.25vw, 2rem);
+    --text-3xl: clamp(1.875rem, 1.5rem + 1.875vw, 2.5rem);
+    --text-4xl: clamp(2.25rem, 1.75rem + 2.5vw, 3rem);
+    --text-5xl: clamp(3rem, 2.25rem + 3.75vw, 4rem);
+    --text-6xl: clamp(3.75rem, 2.75rem + 5vw, 5rem);
+    --text-7xl: clamp(4.5rem, 3.25rem + 6.25vw, 6rem);
+    
+    /* Line Heights */
+    --leading-none: 1;
+    --leading-tight: 1.15;
+    --leading-snug: 1.25;
+    --leading-normal: 1.5;
+    --leading-relaxed: 1.625;
+    --leading-loose: 1.75;
+    
+    /* Letter Spacing */
+    --tracking-tighter: -0.05em;
+    --tracking-tight: -0.025em;
+    --tracking-normal: 0;
+    --tracking-wide: 0.025em;
+    --tracking-wider: 0.05em;
+    --tracking-widest: 0.1em;
+    
+    /* ============================================
+       SPACING TOKENS
+       ============================================ */
+    
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-10: 2.5rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+    --space-20: 5rem;
+    --space-24: 6rem;
+    --space-32: 8rem;
+    
+    /* Section Padding */
+    --section-y-sm: clamp(3rem, 2.5rem + 2.5vw, 4rem);
+    --section-y-md: clamp(4rem, 3rem + 5vw, 6rem);
+    --section-y-lg: clamp(6rem, 4rem + 10vw, 10rem);
+    
+    /* Container Width */
+    --container-max: 80rem;
+    --container-padding: clamp(1rem, 0.5rem + 2.5vw, 2rem);
+    
+    /* ============================================
+       SHADOW TOKENS
+       ============================================ */
+    
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    
+    /* Elevation Shadows */
+    --shadow-card: 0 4px 20px -2px rgb(0 0 0 / 0.08);
+    --shadow-card-hover: 0 20px 40px -8px rgb(0 0 0 / 0.15);
+    
+    /* ============================================
+       TRANSITION TOKENS
+       ============================================ */
+    
+    --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
+    --ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --ease-elegant: cubic-bezier(0.43, 0.13, 0.23, 0.96);
+    
+    --duration-fast: 150ms;
+    --duration-normal: 300ms;
+    --duration-slow: 500ms;
+    
+    /* ============================================
+       BORDER RADIUS TOKENS
+       ============================================ */
+    
+    --radius-sm: 0.375rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    --radius-2xl: 1.5rem;
+    --radius-full: 9999px;
   }
 
+  /* ============================================
+     GLOBAL RESETS
+     ============================================ */
+  
   * {
     margin: 0;
     padding: 0;
@@ -22,33 +156,329 @@
 
   html {
     scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
-    font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: var(--brand-white);
-    color: var(--brand-black);
-    font-feature-settings: "rlig" 1, "calt" 1;
+    font-family: var(--font-body);
+    background: var(--color-base);
+    color: var(--color-secondary);
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+    font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
   }
 
-  /* Typography Scale */
+  /* ============================================
+     TYPOGRAPHY STYLES
+     ============================================ */
+  
   h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
     font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-secondary);
   }
 
   h1 {
-    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-size: var(--text-5xl);
+    font-weight: 800;
+    letter-spacing: var(--tracking-tighter);
   }
 
   h2 {
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-size: var(--text-4xl);
+    font-weight: 700;
   }
 
   h3 {
-    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-size: var(--text-3xl);
+    font-weight: 700;
   }
+
+  h4 {
+    font-size: var(--text-2xl);
+    font-weight: 600;
+  }
+
+  h5 {
+    font-size: var(--text-xl);
+    font-weight: 600;
+  }
+
+  h6 {
+    font-size: var(--text-lg);
+    font-weight: 600;
+  }
+
+  p {
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* ============================================
+     LINK STYLES
+     ============================================ */
+  
+  a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--duration-fast) var(--ease-smooth);
+  }
+
+  /* ============================================
+     SELECTION STYLES
+     ============================================ */
+  
+  ::selection {
+    background: var(--color-primary);
+    color: var(--color-secondary);
+  }
+
+  /* ============================================
+     FOCUS STYLES
+     ============================================ */
+  
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  /* ============================================
+     SCROLLBAR STYLES
+     ============================================ */
+  
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-gray-100);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-gray-400);
+    border-radius: var(--radius-full);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-gray-500);
+  }
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+@layer utilities {
+  /* Container utility */
+  .container-custom {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
+  }
+
+  /* Section padding utilities */
+  .section-py-sm {
+    padding-top: var(--section-y-sm);
+    padding-bottom: var(--section-y-sm);
+  }
+
+  .section-py-md {
+    padding-top: var(--section-y-md);
+    padding-bottom: var(--section-y-md);
+  }
+
+  .section-py-lg {
+    padding-top: var(--section-y-lg);
+    padding-bottom: var(--section-y-lg);
+  }
+
+  /* Text gradient utility */
+  .text-gradient-primary {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Accent bar utility */
+  .accent-bar {
+    position: relative;
+  }
+
+  .accent-bar::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--color-primary);
+  }
+
+  /* Image overlay utilities */
+  .image-overlay-dark {
+    position: relative;
+  }
+
+  .image-overlay-dark::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 0%, var(--color-secondary) 100%);
+    pointer-events: none;
+  }
+
+  /* Premium hover effect */
+  .hover-lift {
+    transition: transform var(--duration-normal) var(--ease-elegant),
+                box-shadow var(--duration-normal) var(--ease-elegant);
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  /* Subtle grain texture overlay */
+  .grain-overlay {
+    position: relative;
+  }
+
+  .grain-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 1;
+  }
+}
+
+/* ============================================
+   ANIMATION KEYFRAMES
+   ============================================ */
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse-subtle {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* ============================================
+   COMPONENT-SPECIFIC STYLES
+   ============================================ */
+
+/* Premium button shine effect */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shine::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.btn-shine:hover::before {
+  left: 100%;
+}
+
+/* Card image zoom effect */
+.card-image-zoom {
+  overflow: hidden;
+}
+
+.card-image-zoom img {
+  transition: transform var(--duration-slow) var(--ease-elegant);
+}
+
+.card-image-zoom:hover img {
+  transform: scale(1.05);
+}
+
+/* Navigation link underline effect */
+.nav-link-underline {
+  position: relative;
+}
+
+.nav-link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--color-primary);
+  transition: width var(--duration-normal) var(--ease-elegant);
+}
+
+.nav-link-underline:hover::after {
+  width: 100%;
 }

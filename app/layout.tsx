@@ -1,11 +1,21 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Manrope, DM_Sans } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
+// Premium Typography - Manrope for headings (bold, confident)
+const manrope = Manrope({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-manrope",
   display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
+});
+
+// Premium Typography - DM Sans for body (clean, readable)
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-dm-sans",
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -13,8 +23,8 @@ export const metadata: Metadata = {
     default: "Square Three Sixty",
     template: "%s | Square Three Sixty",
   },
-  description: "Square Three Sixty - Real Estate, Construction, Travel & Tours",
-  keywords: ["real estate", "construction", "travel", "tours"],
+  description: "Square Three Sixty - Premium Real Estate, Construction, Travel & Tours",
+  keywords: ["real estate", "construction", "travel", "tours", "premium", "luxury"],
   authors: [{ name: "Square Three Sixty" }],
   creator: "Square Three Sixty",
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"),
@@ -42,7 +52,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${manrope.variable} ${dmSans.variable}`}>
       <body className="antialiased">{children}</body>
     </html>
   );
