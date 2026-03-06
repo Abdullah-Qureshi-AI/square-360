@@ -1,237 +1,500 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { easings, durations } from "@/lib/motion";
+
+// Inline SVG icons to avoid dependency issues in preview
+const CompassIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10"/>
+    <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+  </svg>
+);
+
+const HomeIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+);
+
+const MapPinIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+    <circle cx="12" cy="10" r="3"/>
+  </svg>
+);
+
+const StarIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+  </svg>
+);
+
+const InfoIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10"/>
+    <path d="M12 16v-4M12 8h.01"/>
+  </svg>
+);
+
+const MailIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect width="20" height="16" x="2" y="4" rx="2"/>
+    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+  </svg>
+);
+
+const PhoneIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.72 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.64 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.64a16 16 0 0 0 5.36 5.36l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+  </svg>
+);
 
 const navItems = [
-  { href: "/travel-tours", label: "Home" },
-  { href: "/travel-tours/destinations", label: "Destinations" },
-  { href: "/travel-tours/tours", label: "Tours" },
-  { href: "/travel-tours/about", label: "About" },
-  { href: "/travel-tours/contact", label: "Contact" },
+  { href: "/travel-tours", label: "Home", icon: HomeIcon },
+  { href: "/travel-tours/destinations", label: "Destinations", icon: MapPinIcon },
+  { href: "/travel-tours/tours", label: "Tours", icon: StarIcon },
+  { href: "/travel-tours/about", label: "About", icon: InfoIcon },
+  { href: "/travel-tours/contact", label: "Contact", icon: MailIcon },
 ];
 
-// Animation variants
-const navContainerVariants = {
-  hidden: { opacity: 0, y: -10 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: durations.normal,
-      ease: easings.smooth,
-      staggerChildren: 0.05,
-      delayChildren: 0.1,
-    },
-  },
-};
-
-const navItemVariants = {
-  hidden: { opacity: 0, y: -10 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: durations.normal,
-      ease: easings.smooth,
-    },
-  },
-};
-
-const mobileMenuVariants = {
-  hidden: {
-    opacity: 0,
-    height: 0,
-    transition: {
-      duration: durations.normal,
-      ease: easings.smooth,
-    },
-  },
-  visible: {
-    opacity: 1,
-    height: "auto",
-    transition: {
-      duration: durations.normal,
-      ease: easings.smooth,
-      staggerChildren: 0.05,
-      delayChildren: 0.05,
-    },
-  },
-};
-
-const mobileItemVariants = {
-  hidden: { opacity: 0, x: -20 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: {
-      duration: durations.normal,
-      ease: easings.smooth,
-    },
-  },
-};
-
-const logoVariants = {
-  hidden: { opacity: 0, x: -20 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: {
-      duration: durations.slow,
-      ease: easings.elegant,
-    },
-  },
-};
-
 export function TravelNav() {
-  const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeLink, setActiveLink] = useState("/travel-tours");
 
-  // Handle scroll effect
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <motion.nav
-      className={`sticky top-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-[var(--color-primary)]/95 backdrop-blur-md shadow-lg"
-          : "bg-[var(--color-primary)]"
-      }`}
-      initial="hidden"
-      animate="visible"
-      variants={navContainerVariants}
-    >
-      {/* Accent border */}
-      <div className="absolute bottom-0 left-0 right-0 h-1 bg-[var(--color-secondary)]" />
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap');
 
-      <div className="container-custom">
-        <div className="flex h-20 items-center justify-between">
-          {/* Logo */}
-          <motion.div variants={logoVariants}>
-            <Link
-              href="/travel-tours"
-              className="flex items-center space-x-3 group"
-            >
-              <span className="text-xl sm:text-2xl font-bold text-[var(--color-secondary)] transition-opacity duration-300 group-hover:opacity-80">
-                Square Three Sixty
-              </span>
-              <span className="text-[var(--color-secondary)]/40 text-2xl font-light">|</span>
-              <span className="text-[var(--color-secondary)] font-semibold text-lg sm:text-xl">
-                Travel & Tours
-              </span>
-            </Link>
-          </motion.div>
+        :root {
+          --navy: #0f1c2e;
+          --navy-light: #162236;
+          --amber: #f5a623;
+          --amber-dark: #e09310;
+          --amber-light: rgba(245, 166, 35, 0.12);
+          --white: #ffffff;
+          --gray-300: #d1d5db;
+          --gray-400: #9ca3af;
+        }
 
-          {/* Desktop Navigation */}
-          <motion.div 
-            className="hidden md:flex md:items-center md:space-x-1"
-            variants={navContainerVariants}
-          >
-            {navItems.map((item) => (
-              <motion.div key={item.href} variants={navItemVariants}>
-                <Link
-                  href={item.href}
-                  className={`relative px-4 py-2.5 text-sm font-semibold transition-all duration-300 rounded-lg overflow-hidden ${
-                    pathname === item.href
-                      ? "bg-[var(--color-secondary)] text-[var(--color-primary)]"
-                      : "text-[var(--color-secondary)] hover:bg-[var(--color-secondary)]/10"
-                  }`}
-                >
-                  {item.label}
-                  {/* Hover underline effect for non-active items */}
-                  {pathname !== item.href && (
-                    <motion.span
-                      className="absolute bottom-1 left-4 right-4 h-0.5 bg-[var(--color-secondary)]"
-                      initial={{ scaleX: 0 }}
-                      whileHover={{ scaleX: 1 }}
-                      transition={{ duration: durations.fast, ease: easings.smooth }}
-                      style={{ transformOrigin: "left" }}
-                    />
-                  )}
-                </Link>
-              </motion.div>
-            ))}
-          </motion.div>
+        /* Limit box-sizing reset to the navbar so we don't override global page spacing */
+        .nav-wrapper,
+        .nav-wrapper * {
+          box-sizing: border-box;
+        }
 
-          {/* Mobile menu button */}
-          <motion.button
-            className="md:hidden relative w-10 h-10 flex items-center justify-center text-[var(--color-secondary)] hover:opacity-70 transition-opacity"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
-            whileTap={{ scale: 0.95 }}
-          >
-            <div className="relative w-6 h-5">
-              <motion.span
-                className="absolute left-0 w-6 h-0.5 bg-current rounded-full"
-                animate={{
-                  top: mobileMenuOpen ? "50%" : "0%",
-                  rotate: mobileMenuOpen ? 45 : 0,
-                  translateY: mobileMenuOpen ? "-50%" : "0%",
-                }}
-                transition={{ duration: durations.fast }}
-              />
-              <motion.span
-                className="absolute left-0 top-1/2 -translate-y-1/2 w-6 h-0.5 bg-current rounded-full"
-                animate={{
-                  opacity: mobileMenuOpen ? 0 : 1,
-                  scaleX: mobileMenuOpen ? 0 : 1,
-                }}
-                transition={{ duration: durations.fast }}
-              />
-              <motion.span
-                className="absolute left-0 w-6 h-0.5 bg-current rounded-full"
-                animate={{
-                  bottom: mobileMenuOpen ? "50%" : "0%",
-                  rotate: mobileMenuOpen ? -45 : 0,
-                  translateY: mobileMenuOpen ? "50%" : "0%",
-                }}
-                transition={{ duration: durations.fast }}
-              />
-            </div>
-          </motion.button>
+        .nav-wrapper {
+          font-family: 'DM Sans', sans-serif;
+          position: fixed;
+          top: 0; left: 0; right: 0;
+          z-index: 50;
+          transition: all 0.4s ease;
+        }
+
+        .nav-wrapper.scrolled {
+          box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+        }
+
+        /* Top announcement bar */
+        .top-bar {
+          background: var(--amber);
+          color: var(--navy);
+          text-align: center;
+          padding: 6px 16px;
+          font-size: 12px;
+          font-weight: 600;
+          letter-spacing: 0.05em;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+        }
+
+        .top-bar-phone {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          color: var(--navy);
+          text-decoration: none;
+          font-weight: 600;
+        }
+
+        .top-bar-divider {
+          width: 1px;
+          height: 12px;
+          background: rgba(15, 28, 46, 0.3);
+        }
+
+        /* Main nav */
+        .main-nav {
+          background: var(--navy);
+          border-bottom: 1px solid rgba(245, 166, 35, 0.15);
+        }
+
+        /* When page is scrolled, darken the main nav background */
+        .main-nav.scrolled {
+          background: rgba(15, 28, 46, 0.98);
+          backdrop-filter: blur(20px);
+        }
+
+        .nav-inner {
+          max-width: 1280px;
+          margin: 0 auto;
+          padding: 0 24px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          height: 72px;
+        }
+
+        /* Logo */
+        .logo-link {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          text-decoration: none;
+          transition: opacity 0.2s;
+        }
+        .logo-link:hover { opacity: 0.9; }
+
+        .logo-icon {
+          width: 44px;
+          height: 44px;
+          border-radius: 12px;
+          background: linear-gradient(135deg, var(--amber), var(--amber-dark));
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--navy);
+          box-shadow: 0 4px 16px rgba(245, 166, 35, 0.35);
+          flex-shrink: 0;
+        }
+
+        .logo-text-group { display: flex; flex-direction: column; }
+
+        .logo-main {
+          font-family: 'Playfair Display', serif;
+          font-size: 18px;
+          font-weight: 700;
+          color: var(--white);
+          letter-spacing: -0.02em;
+          line-height: 1.1;
+        }
+
+        .logo-main span { color: var(--amber); }
+
+        .logo-sub {
+          font-size: 9px;
+          font-weight: 600;
+          letter-spacing: 0.2em;
+          color: var(--amber);
+          text-transform: uppercase;
+          margin-top: 2px;
+        }
+
+        /* Desktop Nav Links */
+        .desktop-nav {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+
+        .nav-link {
+          position: relative;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          padding: 8px 14px;
+          border-radius: 8px;
+          text-decoration: none;
+          font-size: 13.5px;
+          font-weight: 500;
+          color: var(--gray-300);
+          transition: all 0.25s ease;
+          cursor: pointer;
+          border: none;
+          background: transparent;
+        }
+
+        .nav-link:hover {
+          color: var(--white);
+          background: rgba(255,255,255,0.06);
+        }
+
+        .nav-link.active {
+          color: var(--amber);
+          background: var(--amber-light);
+        }
+
+        .nav-link.active::after {
+          content: '';
+          position: absolute;
+          bottom: 4px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 20px;
+          height: 2px;
+          background: var(--amber);
+          border-radius: 2px;
+        }
+
+        /* CTA Button */
+        .cta-btn {
+          margin-left: 12px;
+          padding: 9px 20px;
+          background: var(--amber);
+          color: var(--navy);
+          border: none;
+          border-radius: 8px;
+          font-size: 13.5px;
+          font-weight: 700;
+          font-family: 'DM Sans', sans-serif;
+          letter-spacing: 0.01em;
+          cursor: pointer;
+          transition: all 0.25s ease;
+          text-decoration: none;
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          box-shadow: 0 2px 12px rgba(245, 166, 35, 0.3);
+        }
+
+        .cta-btn:hover {
+          background: var(--amber-dark);
+          transform: translateY(-1px);
+          box-shadow: 0 6px 20px rgba(245, 166, 35, 0.45);
+        }
+
+        .cta-btn:active { transform: translateY(0); }
+
+        /* Mobile button */
+        .mobile-toggle {
+          display: none;
+          width: 40px;
+          height: 40px;
+          align-items: center;
+          justify-content: center;
+          border-radius: 8px;
+          border: 1px solid rgba(245, 166, 35, 0.25);
+          background: transparent;
+          cursor: pointer;
+          flex-direction: column;
+          gap: 5px;
+          padding: 10px;
+          transition: background 0.2s;
+        }
+
+        .mobile-toggle:hover { background: var(--amber-light); }
+
+        .hamburger-line {
+          width: 20px;
+          height: 2px;
+          background: var(--amber);
+          border-radius: 2px;
+          transition: all 0.3s ease;
+          transform-origin: center;
+        }
+
+        .mobile-toggle.open .hamburger-line:nth-child(1) {
+          transform: translateY(7px) rotate(45deg);
+        }
+        .mobile-toggle.open .hamburger-line:nth-child(2) {
+          opacity: 0;
+          transform: scaleX(0);
+        }
+        .mobile-toggle.open .hamburger-line:nth-child(3) {
+          transform: translateY(-7px) rotate(-45deg);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+          background: var(--navy-light);
+          border-top: 1px solid rgba(245, 166, 35, 0.15);
+          overflow: hidden;
+          max-height: 0;
+          transition: max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .mobile-menu.open {
+          max-height: 400px;
+        }
+
+        .mobile-menu-inner {
+          padding: 12px 16px 20px;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .mobile-nav-link {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 12px 16px;
+          border-radius: 10px;
+          text-decoration: none;
+          font-size: 15px;
+          font-weight: 500;
+          color: var(--gray-300);
+          transition: all 0.2s;
+          cursor: pointer;
+          border: none;
+          background: transparent;
+          font-family: 'DM Sans', sans-serif;
+        }
+
+        .mobile-nav-link:hover {
+          color: var(--white);
+          background: rgba(255,255,255,0.06);
+        }
+
+        .mobile-nav-link.active {
+          color: var(--amber);
+          background: var(--amber-light);
+        }
+
+        .mobile-dot {
+          margin-left: auto;
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: var(--amber);
+        }
+
+        .mobile-cta {
+          margin-top: 8px;
+          padding: 12px 20px;
+          background: var(--amber);
+          color: var(--navy);
+          border: none;
+          border-radius: 10px;
+          font-size: 15px;
+          font-weight: 700;
+          font-family: 'DM Sans', sans-serif;
+          cursor: pointer;
+          text-align: center;
+          text-decoration: none;
+          display: block;
+          transition: background 0.2s;
+        }
+
+        .mobile-cta:hover { background: var(--amber-dark); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+          .desktop-nav { display: none; }
+          .cta-btn { display: none; }
+          .mobile-toggle { display: flex; }
+          .top-bar-extra { display: none; }
+          .logo-main { font-size: 16px; }
+        }
+
+        @media (min-width: 769px) {
+          .mobile-menu { display: none; }
+        }
+      `}</style>
+
+      <header
+        className={`nav-wrapper${scrolled ? " scrolled" : ""}`}
+        style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 50 }}
+      >
+        {/* Top announcement bar */}
+        <div className="top-bar">
+          <span>✈️ Exclusive deals on Pakistan & International tours</span>
+          <div className="top-bar-divider" />
+          <a href="tel:+923001234567" className="top-bar-phone">
+            <PhoneIcon />
+            +92 300 1234567
+          </a>
+          <div className="top-bar-divider top-bar-extra" />
+          <span className="top-bar-extra">✉ travel@square360.com</span>
         </div>
 
-        {/* Mobile Navigation */}
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div
-              className="border-t border-[var(--color-secondary)]/10 py-6 md:hidden overflow-hidden"
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-              variants={mobileMenuVariants}
-            >
-              <div className="flex flex-col space-y-2">
-                {navItems.map((item) => (
-                  <motion.div key={item.href} variants={mobileItemVariants}>
-                    <Link
-                      href={item.href}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className={`block px-4 py-3 text-base font-semibold rounded-xl transition-all duration-300 ${
-                        pathname === item.href
-                          ? "bg-[var(--color-secondary)] text-[var(--color-primary)]"
-                          : "text-[var(--color-secondary)] hover:bg-[var(--color-secondary)]/10"
-                      }`}
-                    >
-                      {item.label}
-                    </Link>
-                  </motion.div>
-                ))}
+        {/* Main navigation */}
+        <div className={`main-nav${scrolled ? " scrolled" : ""}`}>
+          <div className="nav-inner">
+            {/* Logo */}
+            <a href="/travel-tours" className="logo-link" onClick={() => setActiveLink("/travel-tours")}>
+              <div className="logo-icon">
+                <CompassIcon />
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </motion.nav>
+              <div className="logo-text-group">
+                <span className="logo-main">
+                  Square <span>Three</span> Sixty
+                </span>
+                <span className="logo-sub">Travel &amp; Tours</span>
+              </div>
+            </a>
+
+            {/* Desktop nav */}
+            <nav className="desktop-nav">
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = activeLink === item.href;
+                return (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    className={`nav-link${isActive ? ' active' : ''}`}
+                    onClick={() => setActiveLink(item.href)}
+                  >
+                    <Icon />
+                    {item.label}
+                  </a>
+                );
+              })}
+              <a href="/travel-tours/tours" className="cta-btn">
+                Book a Tour ✈
+              </a>
+            </nav>
+
+            {/* Mobile toggle */}
+            <button
+              className={`mobile-toggle${mobileMenuOpen ? ' open' : ''}`}
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              <div className="hamburger-line" />
+              <div className="hamburger-line" />
+              <div className="hamburger-line" />
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile menu */}
+        <div className={`mobile-menu${mobileMenuOpen ? ' open' : ''}`}>
+          <div className="mobile-menu-inner">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = activeLink === item.href;
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className={`mobile-nav-link${isActive ? ' active' : ''}`}
+                  onClick={() => { setActiveLink(item.href); setMobileMenuOpen(false); }}
+                >
+                  <Icon />
+                  {item.label}
+                  {isActive && <span className="mobile-dot" />}
+                </a>
+              );
+            })}
+            <a href="/travel-tours/tours" className="mobile-cta">
+              ✈ Book a Tour Now
+            </a>
+          </div>
+        </div>
+      </header>
+
+    </>
   );
 }

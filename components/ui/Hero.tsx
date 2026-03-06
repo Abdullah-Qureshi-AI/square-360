@@ -199,12 +199,14 @@ export function Hero({
           <motion.div 
             className={cn(
               "absolute inset-0",
-              variant === "dark" ? "bg-black/60" : "bg-black/40"
+              variant === "dark" ? "bg-gradient-to-b from-black/70 via-black/60 to-black/70" : "bg-gradient-to-b from-black/50 via-black/40 to-black/50"
             )}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: durations.slow, delay: 0.3 }}
           />
+          {/* Premium grain overlay */}
+          <div className="absolute inset-0 grain-overlay opacity-50" />
         </motion.div>
       )}
 
@@ -230,7 +232,7 @@ export function Hero({
 
         {/* Title */}
         <motion.h1 
-          className="text-[var(--text-5xl)] sm:text-[var(--text-6xl)] lg:text-[var(--text-7xl)] font-extrabold mb-8 leading-[1.1] tracking-tight"
+          className="text-[var(--text-5xl)] sm:text-[var(--text-6xl)] lg:text-[var(--text-7xl)] font-extrabold mb-8 leading-[1.05] tracking-tighter"
           variants={titleVariants}
         >
           {title}

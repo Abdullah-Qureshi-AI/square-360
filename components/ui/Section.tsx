@@ -144,8 +144,8 @@ export function SectionHeader({
       {subtitle && (
         <motion.p 
           className={cn(
-            "text-sm sm:text-base font-semibold uppercase tracking-[0.15em] mb-4",
-            dark ? "text-[var(--color-primary)]" : "text-[var(--color-gray-500)]"
+            "text-xs sm:text-sm font-medium uppercase tracking-[0.2em] mb-4",
+            dark ? "text-amber-500" : "text-slate-500"
           )}
           initial={animate ? { opacity: 0, y: 20 } : undefined}
           animate={animate && isInView ? { opacity: 1, y: 0 } : undefined}
@@ -156,8 +156,8 @@ export function SectionHeader({
       )}
       <motion.h2 
         className={cn(
-          "text-[var(--text-4xl)] sm:text-[var(--text-5xl)] font-bold mb-6 leading-tight",
-          dark ? "text-white" : "text-[var(--color-secondary)]"
+          "text-3xl md:text-4xl lg:text-5xl font-light mb-6 leading-tight",
+          dark ? "text-white" : "text-slate-900"
         )}
         initial={animate ? { opacity: 0, y: 30 } : undefined}
         animate={animate && isInView ? { opacity: 1, y: 0 } : undefined}
@@ -168,8 +168,8 @@ export function SectionHeader({
       {description && (
         <motion.p 
           className={cn(
-            "text-lg sm:text-xl leading-relaxed",
-            dark ? "text-[var(--color-gray-300)]" : "text-[var(--color-gray-600)]"
+            "text-lg leading-relaxed font-light",
+            dark ? "text-slate-300" : "text-slate-600"
           )}
           initial={animate ? { opacity: 0, y: 20 } : undefined}
           animate={animate && isInView ? { opacity: 1, y: 0 } : undefined}

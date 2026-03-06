@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { Building2, Compass } from "lucide-react";
 import { easings, durations } from "@/lib/motion";
 
 // Animation variants for cinematic entrance
@@ -38,7 +39,7 @@ const cardVariants = {
 const imageVariants = {
   rest: { scale: 1 },
   hover: {
-    scale: 1.08,
+    scale: 1.05,
     transition: {
       duration: durations.slow,
       ease: easings.elegant,
@@ -51,8 +52,8 @@ const overlayVariants = {
   hover: {
     opacity: 0.7,
     transition: {
-      duration: durations.normal,
-      ease: easings.smooth,
+      duration: durations.slow,
+      ease: easings.elegant,
     },
   },
 };
@@ -60,7 +61,7 @@ const overlayVariants = {
 const contentVariants = {
   rest: { y: 0 },
   hover: {
-    y: -8,
+    y: -4,
     transition: {
       duration: durations.normal,
       ease: easings.elegant,
@@ -94,10 +95,25 @@ const accentBarVariants = {
 const iconVariants = {
   rest: { scale: 1, rotate: 0 },
   hover: {
-    scale: 1.1,
-    rotate: 5,
+    scale: 1.15,
+    rotate: 0,
     transition: {
       duration: durations.normal,
+      ease: easings.elegant,
+    },
+  },
+};
+
+const cardHoverVariants = {
+  rest: { 
+    y: 0,
+    boxShadow: "0 2px 8px -2px rgba(0, 0, 0, 0.06), 0 4px 16px -4px rgba(0, 0, 0, 0.08)",
+  },
+  hover: {
+    y: -6,
+    boxShadow: "0 8px 24px -4px rgba(0, 0, 0, 0.12), 0 16px 48px -8px rgba(0, 0, 0, 0.16)",
+    transition: {
+      duration: durations.slow,
       ease: easings.elegant,
     },
   },
@@ -115,8 +131,11 @@ export function CategorySelector() {
       subtitle: "Building Excellence",
       description: "Professional real estate and construction services for your property needs",
       href: "/real-estate",
-      gradient: "from-[var(--color-secondary)] via-[var(--color-secondary-soft)] to-[var(--color-secondary-muted)]",
+      gradient: "from-slate-900/95 via-slate-800/95 to-slate-900/95",
       textColor: "text-white",
+      iconBg: "bg-amber-500",
+      iconColor: "text-slate-900",
+      borderColor: "border-amber-500/30",
       image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop",
       imageAlt: "Modern building construction",
     },
@@ -126,8 +145,11 @@ export function CategorySelector() {
       subtitle: "Discover the World",
       description: "Curated travel experiences and unforgettable destinations",
       href: "/travel-tours",
-      gradient: "from-[var(--color-primary)] via-[var(--color-primary)] to-[var(--color-primary-hover)]",
-      textColor: "text-[var(--color-secondary)]",
+      gradient: "from-amber-500/95 via-amber-500/95 to-amber-600/95",
+      textColor: "text-slate-900",
+      iconBg: "bg-slate-900",
+      iconColor: "text-amber-500",
+      borderColor: "border-slate-900/30",
       image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&h=600&fit=crop",
       imageAlt: "Beautiful travel destination",
     },
@@ -136,7 +158,7 @@ export function CategorySelector() {
   return (
     <motion.div 
       ref={ref}
-      className="grid gap-8 sm:grid-cols-2 sm:gap-10 lg:gap-12 max-w-6xl mx-auto"
+      className="grid gap-6 sm:grid-cols-2 sm:gap-8 max-w-5xl mx-auto"
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       variants={containerVariants}
@@ -148,15 +170,16 @@ export function CategorySelector() {
         >
           <Link
             href={category.href}
-            className="group block focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-4 rounded-[var(--radius-2xl)]"
+            className="group block focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-4 rounded-sm"
             onMouseEnter={() => setHovered(category.id)}
             onMouseLeave={() => setHovered(null)}
           >
             <motion.div
-              className="relative h-full overflow-hidden rounded-[var(--radius-2xl)] border-2 border-[var(--color-secondary)]/10"
+              className="relative h-full overflow-hidden rounded-sm border border-white/10 bg-white/5 backdrop-blur-sm"
               initial="rest"
               whileHover="hover"
               animate={hovered === category.id ? "hover" : "rest"}
+              variants={cardHoverVariants}
             >
               {/* Background Image */}
               <div className="absolute inset-0 z-0">
@@ -173,63 +196,74 @@ export function CategorySelector() {
                     priority
                   />
                 </motion.div>
+                {/* Gradient Overlay */}
                 <motion.div
                   className={`absolute inset-0 bg-gradient-to-br ${category.gradient}`}
                   variants={overlayVariants}
                 />
+                {/* Additional dark overlay for better text readability */}
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
               </div>
 
               {/* Content */}
               <motion.div 
-                className={`relative z-10 p-8 sm:p-10 lg:p-12 min-h-[480px] sm:min-h-[520px] flex flex-col justify-between ${category.textColor}`}
+                className={`relative z-10 p-6 sm:p-8 min-h-[420px] sm:min-h-[460px] flex flex-col justify-between ${category.textColor}`}
                 variants={contentVariants}
               >
                 <div>
-                  {/* Icon placeholder - using subtle geometric shape */}
+                  {/* Icon */}
                   <motion.div 
-                    className={`mb-8 w-16 h-16 rounded-[var(--radius-xl)] flex items-center justify-center ${
-                      category.id === "real-estate" 
-                        ? "bg-[var(--color-primary)]" 
-                        : "bg-[var(--color-secondary)]"
-                    }`}
+                    className={`mb-6 w-12 h-12 rounded-lg ${category.iconBg} flex items-center justify-center shadow-lg`}
                     variants={iconVariants}
                   >
                     {category.id === "real-estate" ? (
-                      <svg className="w-8 h-8 text-[var(--color-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                      </svg>
+                      <Building2 className={`w-6 h-6 ${category.iconColor}`} strokeWidth={2} />
                     ) : (
-                      <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
+                      <Compass className={`w-6 h-6 ${category.iconColor}`} strokeWidth={2} />
                     )}
                   </motion.div>
 
                   {/* Subtitle */}
-                  <p className="text-sm sm:text-base font-semibold uppercase tracking-[0.15em] mb-4 opacity-80">
+                  <p className={`text-xs font-medium uppercase tracking-[0.2em] mb-3 ${
+                    category.id === "real-estate" 
+                      ? "text-amber-500" 
+                      : "text-slate-700"
+                  }`}>
                     {category.subtitle}
                   </p>
 
                   {/* Title */}
-                  <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-[1.1] tracking-tight">
+                  <h2 className={`text-2xl sm:text-3xl lg:text-4xl font-light mb-4 leading-tight tracking-tight ${
+                    category.id === "real-estate" 
+                      ? "text-white" 
+                      : "text-slate-900"
+                  }`}>
                     {category.title}
                   </h2>
 
                   {/* Description */}
-                  <p className="text-base sm:text-lg opacity-90 leading-relaxed max-w-md">
+                  <p className={`text-sm sm:text-base leading-relaxed max-w-sm font-light ${
+                    category.id === "real-estate" 
+                      ? "text-slate-300" 
+                      : "text-slate-700"
+                  }`}>
                     {category.description}
                   </p>
                 </div>
 
                 {/* CTA */}
-                <div className="mt-10">
+                <div className="mt-8 pt-5 border-t border-white/10">
                   <motion.div 
-                    className="inline-flex items-center font-semibold text-lg"
+                    className={`inline-flex items-center font-medium text-sm ${
+                      category.id === "real-estate" 
+                        ? "text-white" 
+                        : "text-slate-900"
+                    }`}
                     variants={arrowVariants}
                   >
-                    <span className="mr-3">Explore</span>
+                    <span className="mr-2">Explore</span>
                     <svg
-                      className="w-6 h-6"
+                      className="w-4 h-4"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -246,10 +280,10 @@ export function CategorySelector() {
 
                 {/* Accent Bar */}
                 <motion.div
-                  className={`absolute bottom-0 left-0 right-0 h-1.5 ${
+                  className={`absolute bottom-0 left-0 right-0 h-[2px] ${
                     category.id === "real-estate" 
-                      ? "bg-[var(--color-primary)]" 
-                      : "bg-[var(--color-secondary)]"
+                      ? "bg-amber-500" 
+                      : "bg-slate-900"
                   }`}
                   variants={accentBarVariants}
                   style={{ transformOrigin: "left" }}

@@ -19,11 +19,11 @@ const cardMotion = {
     boxShadow: "var(--shadow-card)",
   },
   hover: {
-    y: -8,
-    scale: 1.01,
+    y: -12,
+    scale: 1.02,
     boxShadow: "var(--shadow-card-hover)",
     transition: {
-      duration: durations.normal,
+      duration: durations.slow,
       ease: easings.elegant,
     },
   },
@@ -51,14 +51,14 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
   ({ className, variant = "default", hover = false, animate = false, children, ...props }, ref) => {
     const variants = {
       default: "bg-white",
-      elevated: "bg-white shadow-[var(--shadow-card)]",
-      outlined: "bg-white border-2 border-[var(--color-secondary)]",
-      dark: "bg-[var(--color-secondary)] text-white",
+      elevated: "bg-white shadow-[var(--shadow-card)] border border-[var(--color-gray-100)]",
+      outlined: "bg-white border-2 border-[var(--color-secondary)]/10",
+      dark: "bg-[var(--color-secondary)] text-white shadow-[var(--shadow-elevated)]",
     };
 
     const baseStyles = cn(
       "rounded-[var(--radius-xl)] overflow-hidden",
-      "transition-all duration-[var(--duration-normal)] ease-[var(--ease-elegant)]",
+      "transition-all duration-[var(--duration-slow)] ease-[var(--ease-elegant)]",
       variants[variant],
       className
     );
@@ -206,7 +206,7 @@ export function CardFooter({
 }) {
   return (
     <div className={cn(
-      "pt-4 mt-4 border-t-2 border-[var(--color-primary)]",
+      "pt-4 mt-4 border-t border-[var(--color-gray-200)]",
       className
     )}>
       {children}

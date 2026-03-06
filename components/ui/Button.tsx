@@ -45,20 +45,24 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       primary: cn(
         "bg-[var(--color-primary)] text-[var(--color-secondary)]",
         "hover:bg-[var(--color-primary-hover)]",
-        "focus-visible:ring-[var(--color-primary)]",
-        "shadow-md hover:shadow-lg",
-        "btn-shine" // Premium shine effect from globals.css
+        "focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2",
+        "shadow-[var(--shadow-elevated)] hover:shadow-[var(--shadow-premium)]",
+        "btn-shine btn-glow", // Premium shine and glow effects
+        "font-semibold tracking-wide"
       ),
       secondary: cn(
         "bg-[var(--color-secondary)] text-white",
         "hover:bg-[var(--color-secondary-soft)]",
-        "focus-visible:ring-[var(--color-secondary)]",
-        "shadow-md hover:shadow-lg"
+        "focus-visible:ring-[var(--color-secondary)] focus-visible:ring-offset-2",
+        "shadow-[var(--shadow-elevated)] hover:shadow-[var(--shadow-premium)]",
+        "font-semibold tracking-wide"
       ),
       outline: cn(
         "border-2 border-[var(--color-secondary)] text-[var(--color-secondary)]",
         "hover:bg-[var(--color-secondary)] hover:text-white",
-        "focus-visible:ring-[var(--color-secondary)]"
+        "focus-visible:ring-[var(--color-secondary)] focus-visible:ring-offset-2",
+        "font-semibold tracking-wide",
+        "transition-all duration-[var(--duration-normal)]"
       ),
       ghost: cn(
         "text-[var(--color-secondary)]",
