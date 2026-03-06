@@ -38,7 +38,7 @@ export default function TravelLayout({
       <div className="flex min-h-screen flex-col relative z-10">
         <TravelNav />
         {/* Slight offset so content clears the fixed navbar without large gap */}
-        <main className="flex-1 pt-8 md:pt-10 lg:pt-12">{children}</main>
+        <main className="flex-1 pt-8 md:pt-10 lg:pt-20">{children}</main>
         
         {/* Premium Footer */}
         <footer className="relative bg-slate-900/95 backdrop-blur-sm text-white overflow-hidden border-t border-white/10">

@@ -117,6 +117,7 @@ interface SectionHeaderProps {
   align?: "left" | "center" | "right";
   animate?: boolean;
   dark?: boolean;
+  compact?: boolean;
 }
 
 export function SectionHeader({
@@ -126,6 +127,7 @@ export function SectionHeader({
   align = "center",
   animate = true,
   dark = false,
+  compact = false,
 }: SectionHeaderProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
@@ -139,12 +141,17 @@ export function SectionHeader({
   const content = (
     <div 
       ref={ref}
-      className={cn("mb-12 sm:mb-16 max-w-3xl", alignClasses[align])}
+      className={cn(
+        "max-w-3xl",
+        compact ? "mb-6 sm:mb-8" : "mb-12 sm:mb-16",
+        alignClasses[align]
+      )}
     >
       {subtitle && (
         <motion.p 
           className={cn(
-            "text-xs sm:text-sm font-medium uppercase tracking-[0.2em] mb-4",
+            "font-medium uppercase tracking-[0.2em]",
+            compact ? "text-[10px] sm:text-xs mb-2" : "text-xs sm:text-sm mb-4",
             dark ? "text-amber-500" : "text-slate-500"
           )}
           initial={animate ? { opacity: 0, y: 20 } : undefined}
@@ -156,7 +163,8 @@ export function SectionHeader({
       )}
       <motion.h2 
         className={cn(
-          "text-3xl md:text-4xl lg:text-5xl font-light mb-6 leading-tight",
+          "font-light leading-tight",
+          compact ? "text-2xl md:text-3xl lg:text-4xl mb-3" : "text-3xl md:text-4xl lg:text-5xl mb-6",
           dark ? "text-white" : "text-slate-900"
         )}
         initial={animate ? { opacity: 0, y: 30 } : undefined}
@@ -168,7 +176,8 @@ export function SectionHeader({
       {description && (
         <motion.p 
           className={cn(
-            "text-lg leading-relaxed font-light",
+            "leading-relaxed font-light",
+            compact ? "text-sm mb-0" : "text-lg",
             dark ? "text-slate-300" : "text-slate-600"
           )}
           initial={animate ? { opacity: 0, y: 20 } : undefined}
