@@ -3,6 +3,7 @@ import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
   const response = NextResponse.next();
+  const pathname = request.nextUrl.pathname;
 
   // Security headers
   response.headers.set("X-DNS-Prefetch-Control", "on");
@@ -15,6 +16,10 @@ export function middleware(request: NextRequest) {
     "Permissions-Policy",
     "camera=(), microphone=(), geolocation=()"
   );
+
+  if (pathname.startsWith("/admin")) {
+    response.headers.set("Cache-Control", "no-store");
+  }
 
   return response;
 }
