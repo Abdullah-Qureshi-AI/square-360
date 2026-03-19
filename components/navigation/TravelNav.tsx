@@ -141,7 +141,12 @@ export function TravelNav() {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 12px;
+          gap: 10px;
+          flex-wrap: wrap;
+        }
+
+        .top-bar-message {
+          text-align: center;
         }
 
         .top-bar-phone {
@@ -151,6 +156,7 @@ export function TravelNav() {
           color: var(--navy);
           text-decoration: none;
           font-weight: 600;
+          white-space: nowrap;
         }
 
         .top-bar-divider {
@@ -560,8 +566,45 @@ export function TravelNav() {
           .desktop-nav { display: none; }
           .cta-btn { display: none; }
           .mobile-toggle { display: flex; }
-          .top-bar-extra { display: none; }
-          .logo-main { font-size: 16px; }
+          .top-bar {
+            padding: 8px 12px;
+            gap: 6px;
+            font-size: 11px;
+            letter-spacing: 0.03em;
+          }
+          .top-bar-message {
+            width: 100%;
+          }
+          .top-bar-divider,
+          .top-bar-extra {
+            display: none;
+          }
+          .top-bar-phone {
+            font-size: 11px;
+          }
+          .nav-inner {
+            padding: 0 16px;
+            height: 64px;
+          }
+          .logo-link {
+            gap: 10px;
+            min-width: 0;
+          }
+          .logo-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+          }
+          .logo-main {
+            font-size: 15px;
+          }
+          .logo-sub {
+            font-size: 8px;
+            letter-spacing: 0.14em;
+          }
+          .mobile-menu.open {
+            max-height: 520px;
+          }
         }
 
         @media (min-width: 769px) {
@@ -575,7 +618,7 @@ export function TravelNav() {
       >
         {/* Top announcement bar */}
         <div className="top-bar">
-          <span>✈️ Exclusive deals on Pakistan & International tours</span>
+          <span className="top-bar-message">✈️ Exclusive deals on Pakistan &amp; International tours</span>
           <div className="top-bar-divider" />
           <a href="tel:+923001234567" className="top-bar-phone">
             <PhoneIcon />

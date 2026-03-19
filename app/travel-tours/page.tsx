@@ -4,8 +4,8 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import { Star, MapPin, Calendar, Users, Award } from "lucide-react";
-import { Section, SectionHeader } from "@/components/ui/Section";
-import { Card, CardImage, CardContent, CardTitle, CardDescription } from "@/components/ui/Card";
+import { SectionHeader } from "@/components/ui/Section";
+import { Card, CardImage, CardContent } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { fadeInRight } from "@/lib/motion";
 
@@ -35,52 +35,6 @@ const scaleIn = {
     transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const }
   }
 };
-
-// Travel experiences
-const experiences = [
-  {
-    title: "Adventure Tours",
-    description: "Thrilling expeditions for adventurous souls. Trek mountains, explore caves, and experience adrenaline-pumping activities.",
-    image: "https://images.unsplash.com/photo-1464822759844-d150ad6bfb06?w=800&h=600&fit=crop",
-    icon: "⛰️",
-    category: "Adventure"
-  },
-  {
-    title: "Cultural Journeys",
-    description: "Immerse yourself in rich traditions and local heritage. Authentic experiences with local communities.",
-    image: "https://images.unsplash.com/photo-1539650116574-75c0c6d73a6e?w=800&h=600&fit=crop",
-    icon: "🎭",
-    category: "Culture"
-  },
-  {
-    title: "Beach Escapes",
-    description: "Relax on pristine beaches with crystal-clear waters. Luxury resorts and tropical paradise await.",
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=600&fit=crop",
-    icon: "🏖️",
-    category: "Leisure"
-  },
-  {
-    title: "City Explorations",
-    description: "Discover vibrant cities and urban wonders. From historic landmarks to modern marvels.",
-    image: "https://images.unsplash.com/photo-1514565131-fce0801e5785?w=800&h=600&fit=crop",
-    icon: "🏙️",
-    category: "Urban"
-  },
-  {
-    title: "Wildlife Safaris",
-    description: "Witness nature's majesty up close. Expert-guided safaris in world-renowned wildlife reserves.",
-    image: "https://images.unsplash.com/photo-1516426122078-c23e76319801?w=800&h=600&fit=crop",
-    icon: "🦁",
-    category: "Nature"
-  },
-  {
-    title: "Luxury Retreats",
-    description: "Indulge in world-class accommodations and premium experiences. Every detail curated for perfection.",
-    image: "https://images.unsplash.com/photo-1551884170-09fb70a3a2ed?w=800&h=600&fit=crop",
-    icon: "✨",
-    category: "Luxury"
-  }
-];
 
 // Featured tour packages
 const featuredPackages = [
@@ -281,24 +235,20 @@ const ownerStats = [
 ];
 
 export default function TravelHomePage() {
-  const experiencesRef = useRef<HTMLDivElement>(null);
   const packagesRef = useRef<HTMLDivElement>(null);
   const destinationsRef = useRef<HTMLDivElement>(null);
   const testimonialsRef = useRef<HTMLDivElement>(null);
-  const statsRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   
-  const isExperiencesInView = useInView(experiencesRef, { once: true, amount: 0.1 });
   const isPackagesInView = useInView(packagesRef, { once: true, amount: 0.1 });
   const isDestinationsInView = useInView(destinationsRef, { once: true, amount: 0.1 });
   const isTestimonialsInView = useInView(testimonialsRef, { once: true, amount: 0.1 });
-  const isStatsInView = useInView(statsRef, { once: true, amount: 0.2 });
   const isCtaInView = useInView(ctaRef, { once: true, amount: 0.3 });
 
   return (
     <>
       {/* Hero Section - Fits in single viewport */}
-      <section className="relative min-h-[65vh] flex items-center z-10 py-6">
+      <section className="relative flex items-center z-10 py-8 sm:min-h-[65vh] sm:py-10">
 
       {/* Grid pattern overlay */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
@@ -306,11 +256,11 @@ export default function TravelHomePage() {
       </div>
 
       {/* Ambient glow */}
-      <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/3 left-1/4 h-64 w-64 sm:h-96 sm:w-96 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 h-48 w-48 sm:h-64 sm:w-64 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="container mx-auto px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 xl:gap-12 items-center">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 xl:gap-12 items-center">
 
           {/* ── LEFT: Hero copy ─────────────────────────────────────────── */}
           <motion.div
@@ -328,7 +278,7 @@ export default function TravelHomePage() {
             {/* Main heading */}
             <motion.h1
               variants={fadeInUp}
-              className="text-4xl md:text-5xl lg:text-[3.5rem] font-light text-white mb-4 tracking-tight leading-[1.05]"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-light text-white mb-4 tracking-tight leading-[1.05]"
             >
               Travel &amp;{" "}
               <span className="text-amber-400">Tours</span>
@@ -343,7 +293,7 @@ export default function TravelHomePage() {
             {/* Subtitle */}
             <motion.p
               variants={fadeInUp}
-              className="text-lg md:text-xl text-slate-300 font-light leading-relaxed mb-2"
+              className="text-base sm:text-lg md:text-xl text-slate-300 font-light leading-relaxed mb-2"
             >
               Curated journeys to the world&apos;s most breathtaking destinations
             </motion.p>
@@ -366,7 +316,7 @@ export default function TravelHomePage() {
                 href="/travel-tours/tours"
                 variant="primary"
                 size="lg"
-                className="bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold px-8 rounded-xl"
+                className="w-full sm:w-auto bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold px-8 rounded-xl"
               >
                 View Packages
               </Button>
@@ -375,7 +325,7 @@ export default function TravelHomePage() {
                 href="/travel-tours/contact"
                 variant="outline"
                 size="lg"
-                className="border-slate-600 text-slate-300 hover:bg-slate-800 hover:border-slate-500 px-8 rounded-xl"
+                className="w-full sm:w-auto border-slate-600 text-slate-300 hover:bg-slate-800 hover:border-slate-500 px-8 rounded-xl"
               >
                 Plan Custom Trip
               </Button>
@@ -389,17 +339,17 @@ export default function TravelHomePage() {
             variants={fadeInRight}
             className="flex justify-center lg:justify-end"
           >
-            <div className="relative w-full max-w-sm">
+            <div className="relative w-full max-w-sm overflow-hidden sm:overflow-visible">
 
               {/* Decorative ring behind the card */}
-              <div className="absolute -inset-4 rounded-3xl border border-amber-500/10" />
-              <div className="absolute -inset-8 rounded-3xl border border-amber-500/5" />
+              <div className="absolute -inset-2 rounded-3xl border border-amber-500/10 sm:-inset-4" />
+              <div className="absolute hidden rounded-3xl border border-amber-500/5 sm:block sm:-inset-8" />
 
               {/* Card */}
               <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm shadow-2xl shadow-black/40">
 
                 {/* Owner photo */}
-                <div className="relative h-52 w-full bg-gradient-to-br from-slate-700 to-slate-800">
+                <div className="relative h-44 w-full bg-gradient-to-br from-slate-700 to-slate-800 sm:h-52">
                   {/* Replace src with your actual owner image */}
                   <Image
                     src="/travel-tours/owner.jpg"
@@ -416,18 +366,18 @@ export default function TravelHomePage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/30 to-transparent" />
 
                   {/* Floating badge */}
-                  <div className="absolute top-4 right-4 flex items-center gap-1.5 bg-amber-500 text-slate-900 text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
+                  <div className="absolute top-3 right-3 flex items-center gap-1.5 bg-amber-500 text-slate-900 text-[11px] font-bold px-2.5 py-1.5 rounded-full shadow-lg sm:top-4 sm:right-4 sm:text-xs sm:px-3">
                     <Star className="w-3 h-3 fill-slate-900" />
                     Verified Guide
                   </div>
                 </div>
 
                 {/* Info block */}
-                <div className="p-4">
+                <div className="p-4 sm:p-5">
                   {/* Name & title */}
                   <div className="flex items-start justify-between mb-2">
                     <div>
-                      <h3 className="text-lg font-semibold text-white tracking-tight">
+                      <h3 className="text-base sm:text-lg font-semibold text-white tracking-tight">
                         Muhammad Ali
                       </h3>
                       <p className="text-amber-400 text-xs font-medium mt-0.5">
@@ -447,14 +397,14 @@ export default function TravelHomePage() {
                   </p>
 
                   {/* Stats grid */}
-                  <div className="grid grid-cols-4 gap-1.5 pt-3 border-t border-white/10">
+                  <div className="grid grid-cols-2 gap-3 pt-3 border-t border-white/10 sm:grid-cols-4 sm:gap-1.5">
                     {ownerStats.map(({ icon: Icon, value, label }) => (
                       <div key={label} className="text-center">
                         <div className="flex justify-center mb-1">
                           <Icon className="w-3.5 h-3.5 text-amber-500" />
                         </div>
                         <p className="text-white font-bold text-sm leading-none">{value}</p>
-                        <p className="text-slate-500 text-[10px] mt-0.5 leading-tight">{label}</p>
+                        <p className="text-slate-500 text-[10px] mt-0.5 leading-tight max-w-[88px] mx-auto">{label}</p>
                       </div>
                     ))}
                   </div>
@@ -462,8 +412,8 @@ export default function TravelHomePage() {
               </div>
 
               {/* Floating accent dot */}
-              <div className="absolute -bottom-3 -left-3 w-6 h-6 rounded-full bg-amber-500 shadow-lg shadow-amber-500/40" />
-              <div className="absolute -top-3 -right-3 w-4 h-4 rounded-full bg-amber-500/40 border border-amber-500/60" />
+              <div className="absolute bottom-2 left-2 h-4 w-4 rounded-full bg-amber-500 shadow-lg shadow-amber-500/40 sm:-bottom-3 sm:-left-3 sm:h-6 sm:w-6" />
+              <div className="absolute top-2 right-2 h-3 w-3 rounded-full bg-amber-500/40 border border-amber-500/60 sm:-top-3 sm:-right-3 sm:h-4 sm:w-4" />
             </div>
           </motion.div>
 
@@ -532,7 +482,7 @@ export default function TravelHomePage() {
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:64px_64px]" />
         </div>
-        <div className="container mx-auto px-6 lg:px-8 relative z-10">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <SectionHeader
             subtitle="Best Deals"
             title="Featured Tour Packages"
@@ -542,7 +492,7 @@ export default function TravelHomePage() {
           />
 
           <motion.div
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-4"
+            className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 md:gap-5"
             initial="hidden"
             animate={isPackagesInView ? "visible" : "hidden"}
             variants={staggerContainer}
@@ -575,7 +525,7 @@ export default function TravelHomePage() {
                     </div>
 
                     <div className="absolute bottom-3 left-3 right-3">
-                      <h3 className="text-lg font-semibold text-white mb-0.5">
+                      <h3 className="text-base sm:text-lg font-semibold text-white mb-0.5">
                         {pkg.name}
                       </h3>
                       <div className="flex items-center gap-1.5 text-xs text-slate-300">
@@ -587,7 +537,7 @@ export default function TravelHomePage() {
                   
                   <div className="p-3 md:p-4">
                     {/* Duration and Price */}
-                    <div className="flex items-center justify-between mb-2 pb-2 border-b border-white/10">
+                    <div className="mb-2 flex flex-col gap-3 border-b border-white/10 pb-2 sm:flex-row sm:items-center sm:justify-between">
                       <div className="flex items-center gap-1.5">
                         <Calendar className="w-3.5 h-3.5 text-amber-500" />
                         <div>
@@ -631,7 +581,7 @@ export default function TravelHomePage() {
                       <div className="text-[10px] text-slate-400 uppercase tracking-wider mb-1.5">
                         Includes
                       </div>
-                      <div className="grid grid-cols-2 gap-1">
+                      <div className="grid grid-cols-1 gap-1 sm:grid-cols-2">
                         {pkg.features.map((feature, idx) => (
                           <div
                             key={idx}
@@ -688,7 +638,7 @@ export default function TravelHomePage() {
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:64px_64px]" />
         </div>
-        <div className="container mx-auto px-6 lg:px-8 relative z-10">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <SectionHeader
             subtitle="Explore"
             title="Popular Destinations"
@@ -776,7 +726,7 @@ export default function TravelHomePage() {
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:64px_64px]" />
         </div>
-        <div className="container mx-auto px-6 lg:px-8 relative z-10">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <SectionHeader
             subtitle="Testimonials"
             title="Customer Feedback"
@@ -786,7 +736,7 @@ export default function TravelHomePage() {
           />
 
           <motion.div
-            className="grid md:grid-cols-2 gap-4"
+            className="grid gap-4 md:grid-cols-2 md:gap-5"
             initial="hidden"
             animate={isTestimonialsInView ? "visible" : "hidden"}
             variants={staggerContainer}
@@ -844,7 +794,7 @@ export default function TravelHomePage() {
         </div>
         <motion.div 
           ref={ctaRef}
-          className="text-center max-w-3xl mx-auto container mx-auto px-6 lg:px-8 relative z-10"
+          className="container relative z-10 mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8"
           initial="hidden"
           animate={isCtaInView ? "visible" : "hidden"}
           variants={staggerContainer}
@@ -860,7 +810,7 @@ export default function TravelHomePage() {
           <motion.div variants={scaleIn} className="w-12 h-[1px] bg-amber-500 mx-auto my-4" />
 
           <motion.p 
-            className="text-base md:text-lg text-slate-300 mb-6 font-light leading-relaxed"
+            className="text-sm sm:text-base md:text-lg text-slate-300 mb-6 font-light leading-relaxed"
             variants={fadeInUp}
           >
             Apply for one of our packages or contact us to create a custom itinerary 
@@ -897,12 +847,12 @@ export default function TravelHomePage() {
             className="mt-6 pt-4 border-t border-white/10"
           >
             <p className="text-slate-400 text-xs mb-1">Questions? We&apos;re here to help</p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center text-slate-300">
-              <a href="tel:+923001234567" className="hover:text-amber-500 transition-colors">
+            <div className="flex flex-col gap-3 justify-center text-sm text-slate-300 sm:flex-row sm:gap-4">
+              <a href="tel:+923001234567" className="break-all hover:text-amber-500 transition-colors sm:break-normal">
                 📞 +92 300 1234567
               </a>
               <span className="hidden sm:inline text-slate-600">|</span>
-              <a href="mailto:travel@square360.com" className="hover:text-amber-500 transition-colors">
+              <a href="mailto:travel@square360.com" className="break-all hover:text-amber-500 transition-colors sm:break-normal">
                 ✉️ travel@square360.com
               </a>
             </div>
