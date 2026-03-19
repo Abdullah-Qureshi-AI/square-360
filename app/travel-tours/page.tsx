@@ -238,150 +238,195 @@ export default function TravelHomePage() {
   return (
     <>
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
-      <section className="relative flex items-start z-10 pt-[6.5rem] pb-6 sm:pt-28 sm:pb-10 sm:min-h-[70vh] sm:items-center">
+      <section className="relative z-10 pt-[30px] pb-8 sm:pt-8 sm:pb-12 sm:min-h-[75vh] sm:flex sm:items-center">
+
         {/* Grid overlay */}
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:64px_64px]" />
         </div>
-
         {/* Ambient glows */}
-        <div className="absolute top-1/3 left-1/4 h-48 w-48 sm:h-96 sm:w-96 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-1/4 right-1/4 h-32 w-32 sm:h-64 sm:w-64 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/3 left-0 w-72 h-72 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-56 h-56 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          {/* Always 2-col: text left, card right */}
-          <div className="grid grid-cols-[1fr_auto] gap-4 sm:gap-8 lg:grid-cols-2 lg:gap-12 xl:gap-16 items-start sm:items-center">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
 
-            {/* ── LEFT: Hero copy ─────────────────────────────────────────── */}
-            <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="min-w-0">
+          {/* ════════════════════════════════════════
+              MOBILE LAYOUT  (< sm)
+              - Full-width hero text block
+              - Owner card below, full-width horizontal
+          ════════════════════════════════════════ */}
+          <div className="sm:hidden">
 
-              {/* Pill */}
-              <motion.div variants={fadeInUp} className="mb-2 sm:mb-4">
-                <span className="inline-block px-2.5 py-1 text-[9px] sm:text-[10px] font-medium tracking-[0.15em] sm:tracking-[0.2em] text-amber-500 border border-amber-500/30 rounded-full uppercase">
+            {/* Hero text */}
+            <motion.div initial="hidden" animate="visible" variants={staggerContainer}>
+
+              <motion.div variants={fadeInUp} className="mb-3">
+                <span className="inline-flex items-center px-3 py-1 text-[10px] font-semibold tracking-[0.18em] text-amber-500 border border-amber-500/40 rounded-full uppercase">
                   Discover. Explore. Experience.
                 </span>
               </motion.div>
 
-              {/* Heading – compact on mobile */}
               <motion.h1
                 variants={fadeInUp}
-                className="text-[1.9rem] xs:text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-light text-white mb-2 sm:mb-3 tracking-tight leading-[1.08]"
+                className="text-[2.6rem] font-light text-white tracking-tight leading-[1.05] mb-3"
               >
                 Travel &amp;{" "}
                 <span className="text-amber-400">Tours</span>
               </motion.h1>
 
-              {/* Amber divider */}
-              <motion.div
-                variants={scaleIn}
-                className="w-8 sm:w-12 h-[2px] bg-amber-500 mb-3 sm:mb-4 origin-left"
-              />
+              <motion.div variants={scaleIn} className="w-10 h-[2px] bg-amber-500 mb-4 origin-left" />
 
-              {/* Subheading */}
-              <motion.p
-                variants={fadeInUp}
-                className="text-xs xs:text-sm sm:text-lg md:text-xl text-slate-300 font-light leading-snug sm:leading-relaxed mb-1 sm:mb-2"
-              >
+              <motion.p variants={fadeInUp} className="text-sm text-slate-300 leading-relaxed mb-1">
                 Curated journeys to the world&apos;s most breathtaking destinations
               </motion.p>
-
-              {/* Body text – sm+ only to keep mobile tight */}
-              <motion.p
-                variants={fadeInUp}
-                className="hidden sm:block text-sm md:text-base text-slate-400 max-w-xl leading-relaxed"
-              >
-                Your adventure begins here. Experience unforgettable travel with our expertly crafted tours.
+              <motion.p variants={fadeInUp} className="text-xs text-slate-500 leading-relaxed mb-5">
+                Your adventure begins here — expertly crafted tours await.
               </motion.p>
 
-              {/* CTAs – always side by side */}
-              <motion.div
-                variants={fadeInUp}
-                className="mt-4 sm:mt-6 flex flex-row gap-2 sm:gap-3"
-              >
+              {/* CTAs */}
+              <motion.div variants={fadeInUp} className="flex gap-2.5 mb-6">
                 <Button
-                  asChild
-                  href="/travel-tours/tours"
-                  variant="primary"
-                  size="lg"
-                  className="bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold px-3 sm:px-8 rounded-xl text-[11px] sm:text-base py-2.5 sm:py-3 h-auto whitespace-nowrap"
+                  asChild href="/travel-tours/tours" variant="primary"
+                  className="flex-1 bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold rounded-xl text-sm py-2.5 h-auto"
                 >
                   View Packages
                 </Button>
                 <Button
-                  asChild
-                  href="/travel-tours/contact"
-                  variant="outline"
-                  size="lg"
-                  className="border-slate-600 text-slate-300 hover:bg-slate-800 hover:border-slate-500 px-3 sm:px-8 rounded-xl text-[11px] sm:text-base py-2.5 sm:py-3 h-auto whitespace-nowrap"
+                  asChild href="/travel-tours/contact" variant="outline"
+                  className="flex-1 border-slate-600 text-slate-300 hover:bg-slate-800 rounded-xl text-sm py-2.5 h-auto"
                 >
                   Plan Custom Trip
                 </Button>
               </motion.div>
             </motion.div>
 
-            {/* ── RIGHT: Owner card – visible on ALL screen sizes ─────────── */}
+            {/* Owner card – horizontal pill on mobile */}
             <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={fadeInRight}
-              className="flex justify-end"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             >
-              {/* ── Mobile portrait card (< sm) ── */}
-              <div className="sm:hidden relative w-[148px] flex-shrink-0">
-                <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-white/5 shadow-xl shadow-black/40">
+              <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-white/[0.04] backdrop-blur-sm shadow-xl shadow-black/30">
 
-                  {/* Photo */}
-                  <div className="relative h-[155px] w-full bg-gradient-to-br from-slate-700 to-slate-800">
+                {/* Top accent line */}
+                <div className="h-[2px] w-full bg-gradient-to-r from-amber-500 via-amber-400 to-transparent" />
+
+                <div className="flex items-stretch gap-0">
+
+                  {/* Photo column */}
+                  <div className="relative w-[100px] flex-shrink-0 bg-gradient-to-br from-slate-700 to-slate-800">
                     <Image
                       src="/travel-tours/owner.jpg"
-                      alt="Muhammad Ali – Founder"
+                      alt="Hamza Tahir"
                       fill
                       className="object-cover object-top"
                       onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent" />
-                    {/* Verified badge */}
-                    <div className="absolute top-2 left-2 flex items-center gap-0.5 bg-amber-500 text-slate-900 text-[9px] font-bold px-1.5 py-0.5 rounded-full shadow">
-                      <Star className="w-2.5 h-2.5 fill-slate-900" />
-                      Verified
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-slate-900/50" />
+                    {/* Verified badge pinned to photo */}
+                    <div className="absolute bottom-2 left-1.5 flex items-center gap-0.5 bg-amber-500 text-slate-900 text-[8px] font-black px-1.5 py-0.5 rounded-full">
+                      <Star className="w-2 h-2 fill-slate-900" /> Verified
                     </div>
                   </div>
 
-                  {/* Info */}
-                  <div className="px-2.5 py-2.5">
-                    <h3 className="text-white font-semibold text-[13px] leading-tight">Muhammad Ali</h3>
-                    <p className="text-amber-400 text-[10px] font-medium mb-2.5">Founder &amp; CEO</p>
+                  {/* Info column */}
+                  <div className="flex-1 px-3 py-3">
+                    <div className="flex items-start justify-between mb-2">
+                      <div>
+                        <h3 className="text-white font-semibold text-sm leading-none">Hamza Tahir</h3>
+                        <p className="text-amber-400 text-[11px] mt-0.5">Founder &amp; Head of Tours</p>
+                      </div>
+                      <div className="w-7 h-7 rounded-lg bg-amber-500/15 border border-amber-500/25 flex items-center justify-center flex-shrink-0">
+                        <Award className="w-3.5 h-3.5 text-amber-400" />
+                      </div>
+                    </div>
 
-                    {/* 2×2 stats grid */}
-                    <div className="grid grid-cols-2 gap-x-2 gap-y-1.5 pt-2 border-t border-white/10">
+                    {/* 4 stats in a row */}
+                    <div className="grid grid-cols-4 gap-1 pt-2 border-t border-white/10">
                       {ownerStats.map(({ icon: Icon, value, label }) => (
-                        <div key={label} className="flex items-center gap-1">
-                          <Icon className="w-3 h-3 text-amber-500 flex-shrink-0" />
-                          <div>
-                            <p className="text-white font-bold text-[11px] leading-none">{value}</p>
-                            <p className="text-slate-500 text-[9px] leading-tight">{label}</p>
-                          </div>
+                        <div key={label} className="text-center">
+                          <Icon className="w-3 h-3 text-amber-500 mx-auto mb-0.5" />
+                          <p className="text-white font-bold text-[11px] leading-none">{value}</p>
+                          <p className="text-slate-500 text-[9px] mt-0.5 leading-tight">{label}</p>
                         </div>
                       ))}
                     </div>
                   </div>
-                </div>
 
-                {/* Accent dots */}
-                <div className="absolute -bottom-2 -left-2 w-4 h-4 rounded-full bg-amber-500 shadow-md shadow-amber-500/50" />
-                <div className="absolute -top-2 -right-2 w-3 h-3 rounded-full bg-amber-500/40 border border-amber-500/60" />
+                </div>
               </div>
 
-              {/* ── Desktop fuller card (sm+) ── */}
-              <div className="hidden sm:block relative w-full max-w-sm">
+              {/* Subtle accent dot */}
+              <div className="mt-3 flex justify-center gap-1.5">
+                <div className="w-1.5 h-1.5 rounded-full bg-amber-500/60" />
+                <div className="w-1.5 h-1.5 rounded-full bg-amber-500/30" />
+                <div className="w-1.5 h-1.5 rounded-full bg-amber-500/15" />
+              </div>
+            </motion.div>
+
+          </div>
+
+          {/* ════════════════════════════════════════
+              DESKTOP LAYOUT  (sm+)
+              - 2-column: text left, full card right
+          ════════════════════════════════════════ */}
+          <div className="hidden sm:grid sm:grid-cols-2 gap-10 lg:gap-16 xl:gap-20 items-center">
+
+            {/* Left – text */}
+            <motion.div initial="hidden" animate="visible" variants={staggerContainer}>
+              <motion.div variants={fadeInUp} className="mb-5">
+                <span className="inline-block px-4 py-1.5 text-[10px] font-semibold tracking-[0.2em] text-amber-500 border border-amber-500/30 rounded-full uppercase">
+                  Discover. Explore. Experience.
+                </span>
+              </motion.div>
+
+              <motion.h1
+                variants={fadeInUp}
+                className="text-4xl md:text-5xl lg:text-[3.5rem] font-light text-white mb-4 tracking-tight leading-[1.05]"
+              >
+                Travel &amp;{" "}
+                <span className="text-amber-400">Tours</span>
+              </motion.h1>
+
+              <motion.div variants={scaleIn} className="w-14 h-[2px] bg-amber-500 mb-6 origin-left" />
+
+              <motion.p variants={fadeInUp} className="text-lg md:text-xl text-slate-300 font-light leading-relaxed mb-3">
+                Curated journeys to the world&apos;s most breathtaking destinations
+              </motion.p>
+              <motion.p variants={fadeInUp} className="text-base text-slate-400 max-w-xl leading-relaxed">
+                Your adventure begins here. Experience unforgettable travel with our expertly crafted tours.
+              </motion.p>
+
+              <motion.div variants={fadeInUp} className="mt-8 flex gap-4">
+                <Button
+                  asChild href="/travel-tours/tours" variant="primary" size="lg"
+                  className="bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold px-8 rounded-xl"
+                >
+                  View Packages
+                </Button>
+                <Button
+                  asChild href="/travel-tours/contact" variant="outline" size="lg"
+                  className="border-slate-600 text-slate-300 hover:bg-slate-800 hover:border-slate-500 px-8 rounded-xl"
+                >
+                  Plan Custom Trip
+                </Button>
+              </motion.div>
+            </motion.div>
+
+            {/* Right – owner card */}
+            <motion.div
+              initial="hidden" animate="visible" variants={fadeInRight}
+              className="flex justify-end"
+            >
+              <div className="relative w-full max-w-sm">
                 <div className="absolute -inset-4 rounded-3xl border border-amber-500/10" />
                 <div className="absolute -inset-8 rounded-3xl border border-amber-500/5" />
 
                 <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm shadow-2xl shadow-black/40">
-                  <div className="relative h-56 w-full bg-gradient-to-br from-slate-700 to-slate-800">
+                  <div className="relative h-60 w-full bg-gradient-to-br from-slate-700 to-slate-800">
                     <Image
                       src="/travel-tours/owner.jpg"
-                      alt="Muhammad Ali – Founder"
+                      alt="Hamza Tahir – Founder"
                       fill
                       className="object-cover object-top"
                       onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
@@ -396,7 +441,7 @@ export default function TravelHomePage() {
                   <div className="p-5">
                     <div className="flex items-start justify-between mb-2">
                       <div>
-                        <h3 className="text-lg font-semibold text-white tracking-tight">Muhammad Ali</h3>
+                        <h3 className="text-lg font-semibold text-white tracking-tight">Hamza Tahir</h3>
                         <p className="text-amber-400 text-xs font-medium mt-0.5">Founder &amp; Head of Tours</p>
                       </div>
                       <div className="w-9 h-9 rounded-lg bg-amber-500/15 border border-amber-500/25 flex items-center justify-center">
@@ -409,9 +454,7 @@ export default function TravelHomePage() {
                     <div className="grid grid-cols-4 gap-1 pt-3 border-t border-white/10">
                       {ownerStats.map(({ icon: Icon, value, label }) => (
                         <div key={label} className="text-center">
-                          <div className="flex justify-center mb-1">
-                            <Icon className="w-3.5 h-3.5 text-amber-500" />
-                          </div>
+                          <Icon className="w-3.5 h-3.5 text-amber-500 mx-auto mb-1" />
                           <p className="text-white font-bold text-sm leading-none">{value}</p>
                           <p className="text-slate-500 text-[9px] mt-0.5 leading-tight">{label}</p>
                         </div>
