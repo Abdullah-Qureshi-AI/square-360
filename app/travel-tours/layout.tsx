@@ -38,7 +38,7 @@ export default function TravelLayout({
       <div className="flex min-h-screen flex-col relative z-10">
         <TravelNav />
         {/* Slight offset so content clears the fixed navbar without large gap */}
-        <main className="flex-1 pt-8 md:pt-10 lg:pt-20">{children}</main>
+        <main className="flex-1 pt-[118px] md:pt-[110px] lg:pt-[106px]">{children}</main>
         
         {/* Premium Footer */}
         <footer className="relative bg-slate-900/95 backdrop-blur-sm text-white overflow-hidden border-t border-white/10">
@@ -50,7 +50,7 @@ export default function TravelLayout({
             <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:64px_64px]" />
           </div>
           
-          <div className="container mx-auto px-6 lg:px-8 py-16 lg:py-20 relative z-10">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16 lg:py-20 relative z-10">
             <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 mb-12">
               {/* Brand */}
               <div className="lg:col-span-1">
