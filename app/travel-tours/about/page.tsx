@@ -28,7 +28,7 @@ export default function TravelAboutPage() {
             </h2>
             <p className="text-lg text-gray-700 mb-4 leading-relaxed">
               At Square Three Sixty Travel & Tours, we believe that travel is
-              more than just visiting places—it's about creating memories,
+              more than just visiting places—it&apos;s about creating memories,
               experiencing cultures, and discovering the world. Our mission is to
               make every journey extraordinary.
             </p>

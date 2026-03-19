@@ -345,7 +345,7 @@ export default function TravelHomePage() {
               variants={fadeInUp}
               className="text-lg md:text-xl text-slate-300 font-light leading-relaxed mb-2"
             >
-              Curated journeys to the world's most breathtaking destinations
+              Curated journeys to the world&apos;s most breathtaking destinations
             </motion.p>
 
             <motion.p
@@ -442,7 +442,7 @@ export default function TravelHomePage() {
                   {/* Short bio */}
                   <p className="text-slate-400 text-xs leading-relaxed mb-3">
                     With over 10 years crafting unforgettable journeys across Pakistan
-                    and beyond, I founded Square Three Sixty to share the world's hidden
+                    and beyond, I founded Square Three Sixty to share the world&apos;s hidden
                     gems with passionate explorers like you.
                   </p>
 
@@ -804,7 +804,7 @@ export default function TravelHomePage() {
                       ))}
                     </div>
                     <p className="text-slate-200 font-light leading-relaxed mb-3 text-sm italic line-clamp-3">
-                      "{testimonial.comment}"
+                      &quot;{testimonial.comment}&quot;
                     </p>
                     <div className="flex items-center gap-3 pt-2 border-t border-white/20">
                       <div className="relative w-10 h-10 rounded-full overflow-hidden flex-shrink-0 ring-2 ring-amber-500/20">
@@ -864,7 +864,7 @@ export default function TravelHomePage() {
             variants={fadeInUp}
           >
             Apply for one of our packages or contact us to create a custom itinerary 
-            tailored to your dreams. Let's make your travel dreams a reality.
+            tailored to your dreams. Let&apos;s make your travel dreams a reality.
           </motion.p>
 
           <motion.div 
@@ -896,7 +896,7 @@ export default function TravelHomePage() {
             variants={fadeInUp}
             className="mt-6 pt-4 border-t border-white/10"
           >
-            <p className="text-slate-400 text-xs mb-1">Questions? We're here to help</p>
+            <p className="text-slate-400 text-xs mb-1">Questions? We&apos;re here to help</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center text-slate-300">
               <a href="tel:+923001234567" className="hover:text-amber-500 transition-colors">
                 📞 +92 300 1234567

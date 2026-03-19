@@ -16,7 +16,7 @@ export default function TravelContactPage() {
             Contact Us
           </h1>
           <p className="text-lg sm:text-xl text-gray-700 max-w-2xl mx-auto">
-            Ready to plan your next adventure? Let's make it happen!
+            Ready to plan your next adventure? Let&apos;s make it happen!
           </p>
         </div>
       </Section>

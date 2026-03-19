@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 // Inline SVG icons to avoid dependency issues in preview
 const CompassIcon = () => (
@@ -52,16 +54,22 @@ const PhoneIcon = () => (
 
 const navItems = [
   { href: "/travel-tours", label: "Home", icon: HomeIcon },
-  { href: "/travel-tours/destinations", label: "Destinations", icon: MapPinIcon },
-  { href: "/travel-tours/tours", label: "Tours", icon: StarIcon },
   { href: "/travel-tours/about", label: "About", icon: InfoIcon },
   { href: "/travel-tours/contact", label: "Contact", icon: MailIcon },
-];
+] as const;
+
+const toursMenuItems = [
+  { href: "/travel-tours/tours", label: "All Tours", icon: StarIcon },
+  { href: "/travel-tours/destinations", label: "Destinations", icon: MapPinIcon },
+  { href: "/travel-tours/customize", label: "Customize Package", icon: CompassIcon },
+] as const;
 
 export function TravelNav() {
+  const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeLink, setActiveLink] = useState("/travel-tours");
+  const [toursOpen, setToursOpen] = useState(false);
+  const [mobileToursOpen, setMobileToursOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -69,6 +77,24 @@ export function TravelNav() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    queueMicrotask(() => {
+      setMobileMenuOpen(false);
+      setToursOpen(false);
+    });
+  }, [pathname]);
+
+  const isToursActive = useMemo(() => {
+    if (!pathname) return false;
+    return (
+      pathname === "/travel-tours/tours" ||
+      pathname.startsWith("/travel-tours/tours/") ||
+      pathname === "/travel-tours/destinations" ||
+      pathname.startsWith("/travel-tours/destinations/") ||
+      pathname === "/travel-tours/customize" ||
+      pathname.startsWith("/travel-tours/customize/")
+    );
+  }, [pathname]);
   return (
     <>
       <style>{`
@@ -246,6 +272,85 @@ export function TravelNav() {
           border-radius: 2px;
         }
 
+        /* Dropdown */
+        .dropdown {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+        }
+
+        .dropdown-trigger {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+        }
+
+        .chevron {
+          width: 10px;
+          height: 10px;
+          opacity: 0.8;
+          transition: transform 0.2s ease;
+          transform: rotate(0deg);
+        }
+
+        .dropdown.open .chevron {
+          transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+          position: absolute;
+          top: calc(100% + 10px);
+          left: 0;
+          min-width: 240px;
+          background: rgba(15, 28, 46, 0.98);
+          border: 1px solid rgba(245, 166, 35, 0.2);
+          border-radius: 12px;
+          padding: 8px;
+          box-shadow: 0 16px 50px rgba(0,0,0,0.45);
+          backdrop-filter: blur(18px);
+          opacity: 0;
+          transform: translateY(-8px);
+          pointer-events: none;
+          transition: opacity 0.2s ease, transform 0.2s ease;
+          z-index: 60;
+        }
+
+        .dropdown.open .dropdown-menu {
+          opacity: 1;
+          transform: translateY(0);
+          pointer-events: auto;
+        }
+
+        .dropdown-item {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding: 10px 12px;
+          border-radius: 10px;
+          text-decoration: none;
+          color: var(--gray-300);
+          font-size: 13.5px;
+          font-weight: 500;
+          transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .dropdown-item:hover {
+          background: rgba(255,255,255,0.06);
+          color: var(--white);
+        }
+
+        .dropdown-item.active {
+          color: var(--amber);
+          background: rgba(245, 166, 35, 0.12);
+        }
+
+        .dropdown-divider {
+          height: 1px;
+          background: rgba(255,255,255,0.08);
+          margin: 6px 8px;
+        }
+
         /* CTA Button */
         .cta-btn {
           margin-left: 12px;
@@ -332,6 +437,68 @@ export function TravelNav() {
           display: flex;
           flex-direction: column;
           gap: 4px;
+        }
+
+        .mobile-submenu {
+          padding-left: 12px;
+          margin-top: 2px;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .mobile-subtitle {
+          padding: 8px 16px 2px;
+          font-size: 11px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: rgba(245, 166, 35, 0.8);
+          font-weight: 700;
+        }
+
+        .mobile-sub-link {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 10px 16px;
+          border-radius: 10px;
+          text-decoration: none;
+          font-size: 14px;
+          font-weight: 500;
+          color: var(--gray-300);
+          transition: all 0.2s;
+          background: rgba(255,255,255,0.02);
+          border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .mobile-sub-link:hover {
+          color: var(--white);
+          background: rgba(255,255,255,0.06);
+        }
+
+        .mobile-sub-link.active {
+          color: var(--amber);
+          background: rgba(245, 166, 35, 0.10);
+          border-color: rgba(245, 166, 35, 0.25);
+        }
+
+        .mobile-expand {
+          margin-left: auto;
+          width: 28px;
+          height: 28px;
+          border-radius: 8px;
+          border: 1px solid rgba(255,255,255,0.10);
+          background: rgba(255,255,255,0.03);
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--gray-300);
+        }
+
+        .mobile-expand.open {
+          background: rgba(245, 166, 35, 0.10);
+          border-color: rgba(245, 166, 35, 0.25);
+          color: var(--amber);
         }
 
         .mobile-nav-link {
@@ -422,7 +589,7 @@ export function TravelNav() {
         <div className={`main-nav${scrolled ? " scrolled" : ""}`}>
           <div className="nav-inner">
             {/* Logo */}
-            <a href="/travel-tours" className="logo-link" onClick={() => setActiveLink("/travel-tours")}>
+            <Link href="/travel-tours" className="logo-link">
               <div className="logo-icon">
                 <CompassIcon />
               </div>
@@ -432,28 +599,64 @@ export function TravelNav() {
                 </span>
                 <span className="logo-sub">Travel &amp; Tours</span>
               </div>
-            </a>
+            </Link>
 
             {/* Desktop nav */}
             <nav className="desktop-nav">
+              <div
+                className={`dropdown${toursOpen ? " open" : ""}`}
+                onMouseEnter={() => setToursOpen(true)}
+                onMouseLeave={() => setToursOpen(false)}
+              >
+                <button
+                  type="button"
+                  className={`nav-link dropdown-trigger${isToursActive ? " active" : ""}`}
+                  onClick={() => setToursOpen((v) => !v)}
+                  aria-haspopup="menu"
+                  aria-expanded={toursOpen}
+                >
+                  <StarIcon />
+                  Tours
+                  <svg className="chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.25a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08z" clipRule="evenodd" />
+                  </svg>
+                </button>
+                <div className="dropdown-menu" role="menu">
+                  {toursMenuItems.map((item, idx) => {
+                    const Icon = item.icon;
+                    const active =
+                      pathname === item.href || (item.href !== "/travel-tours/tours" && pathname?.startsWith(item.href + "/"));
+                    return (
+                      <div key={item.href}>
+                        <Link href={item.href} className={`dropdown-item${active ? " active" : ""}`} role="menuitem">
+                          <Icon />
+                          {item.label}
+                        </Link>
+                        {idx === 0 && <div className="dropdown-divider" />}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
               {navItems.map((item) => {
                 const Icon = item.icon;
-                const isActive = activeLink === item.href;
+                const isActive =
+                  pathname === item.href || (item.href !== "/travel-tours" && pathname?.startsWith(item.href + "/"));
                 return (
-                  <a
+                  <Link
                     key={item.href}
                     href={item.href}
                     className={`nav-link${isActive ? ' active' : ''}`}
-                    onClick={() => setActiveLink(item.href)}
                   >
                     <Icon />
                     {item.label}
-                  </a>
+                  </Link>
                 );
               })}
-              <a href="/travel-tours/tours" className="cta-btn">
+              <Link href="/travel-tours/customize" className="cta-btn">
                 Book a Tour ✈
-              </a>
+              </Link>
             </nav>
 
             {/* Mobile toggle */}
@@ -472,25 +675,62 @@ export function TravelNav() {
         {/* Mobile menu */}
         <div className={`mobile-menu${mobileMenuOpen ? ' open' : ''}`}>
           <div className="mobile-menu-inner">
+            {/* Tours group (mobile) */}
+            <button
+              type="button"
+              className={`mobile-nav-link${isToursActive ? " active" : ""}`}
+              onClick={() => setMobileToursOpen((v) => !v)}
+            >
+              <StarIcon />
+              Tours
+              <span className={`mobile-expand${mobileToursOpen ? " open" : ""}`}>
+                <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.25a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08z" clipRule="evenodd" />
+                </svg>
+              </span>
+            </button>
+            {mobileToursOpen && (
+              <div className="mobile-submenu">
+                <div className="mobile-subtitle">Tours</div>
+                {toursMenuItems.map((item) => {
+                  const Icon = item.icon;
+                  const active =
+                    pathname === item.href || (item.href !== "/travel-tours/tours" && pathname?.startsWith(item.href + "/"));
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={`mobile-sub-link${active ? " active" : ""}`}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <Icon />
+                      {item.label}
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
+
             {navItems.map((item) => {
               const Icon = item.icon;
-              const isActive = activeLink === item.href;
+              const isActive =
+                pathname === item.href || (item.href !== "/travel-tours" && pathname?.startsWith(item.href + "/"));
               return (
-                <a
+                <Link
                   key={item.href}
                   href={item.href}
-                  className={`mobile-nav-link${isActive ? ' active' : ''}`}
-                  onClick={() => { setActiveLink(item.href); setMobileMenuOpen(false); }}
+                  className={`mobile-nav-link${isActive ? " active" : ""}`}
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   <Icon />
                   {item.label}
                   {isActive && <span className="mobile-dot" />}
-                </a>
+                </Link>
               );
             })}
-            <a href="/travel-tours/tours" className="mobile-cta">
+            <Link href="/travel-tours/customize" className="mobile-cta" onClick={() => setMobileMenuOpen(false)}>
               ✈ Book a Tour Now
-            </a>
+            </Link>
           </div>
         </div>
       </header>
