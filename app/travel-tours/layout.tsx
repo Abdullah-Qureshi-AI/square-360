@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { TravelNav } from "@/components/navigation/TravelNav";
+import { getSiteSettings } from "@/lib/content/repository";
 
 export const metadata: Metadata = {
   title: "Travel & Tours",
@@ -20,11 +21,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function TravelLayout({
+export default async function TravelLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const settings = await getSiteSettings();
+
   return (
     <div className="min-h-screen relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       {/* Subtle grid pattern - Applied to entire page */}
@@ -36,7 +39,7 @@ export default function TravelLayout({
       <div className="fixed top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-amber-500 to-transparent z-50" />
 
       <div className="flex min-h-screen flex-col relative z-10">
-        <TravelNav />
+        <TravelNav settings={settings} />
         {/* Slight offset so content clears the fixed navbar without large gap */}
         <main className="flex-1 pt-[118px] md:pt-[110px] lg:pt-[106px]">{children}</main>
         
@@ -58,18 +61,18 @@ export default function TravelLayout({
                   <span className="text-amber-500">Square</span> Three Sixty
                 </h3>
                 <p className="text-slate-400 text-sm leading-relaxed mb-6">
-                  Your journey starts here. Creating unforgettable travel experiences and memories that last a lifetime.
+                  {settings.footerDescription}
                 </p>
                 {/* Social icons placeholder */}
                 <div className="flex space-x-4">
-                  {["LinkedIn", "Twitter", "Instagram"].map((social) => (
+                  {settings.socialLinks.map((social) => (
                     <a
-                      key={social}
-                      href="#"
+                      key={social.label}
+                      href={social.href}
                       className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center hover:bg-amber-500 hover:text-slate-900 transition-all duration-300"
-                      aria-label={social}
+                      aria-label={social.label}
                     >
-                      <span className="text-xs font-bold">{social[0]}</span>
+                      <span className="text-xs font-bold">{social.label[0]}</span>
                     </a>
                   ))}
                 </div>
@@ -132,19 +135,19 @@ export default function TravelLayout({
                     <svg className="w-4 h-4 mr-3 mt-0.5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                     </svg>
-                    (555) 987-6543
+                    {settings.phone}
                   </li>
                   <li className="flex items-start">
                     <svg className="w-4 h-4 mr-3 mt-0.5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
-                    travel@square360.com
+                    {settings.email}
                   </li>
                   <li className="flex items-start">
                     <svg className="w-4 h-4 mr-3 mt-0.5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    Mon-Sat 9AM-7PM
+                    {settings.supportHours}
                   </li>
                 </ul>
               </div>
@@ -156,8 +159,11 @@ export default function TravelLayout({
                 © {new Date().getFullYear()} Square Three Sixty - Travel & Tours. All rights reserved.
               </p>
               <div className="flex space-x-6 text-sm text-slate-500">
-                <a href="#" className="hover:text-amber-500 transition-colors">Privacy Policy</a>
-                <a href="#" className="hover:text-amber-500 transition-colors">Terms of Service</a>
+                {settings.legalLinks.map((link) => (
+                  <a key={link.label} href={link.href} className="hover:text-amber-500 transition-colors">
+                    {link.label}
+                  </a>
+                ))}
               </div>
             </div>
           </div>

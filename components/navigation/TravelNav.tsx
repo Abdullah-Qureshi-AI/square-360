@@ -3,6 +3,7 @@
 import { useMemo, useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import type { TravelSiteSettings } from "@/lib/content/types";
 
 // Inline SVG icons to avoid dependency issues in preview
 const CompassIcon = () => (
@@ -64,12 +65,14 @@ const toursMenuItems = [
   { href: "/travel-tours/customize", label: "Customize Package", icon: CompassIcon },
 ] as const;
 
-export function TravelNav() {
+export function TravelNav({ settings }: { settings: TravelSiteSettings }) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [toursOpen, setToursOpen] = useState(false);
   const [mobileToursOpen, setMobileToursOpen] = useState(false);
+  const phoneHref = `tel:${settings.phone.replace(/\s+/g, "")}`;
+  const mailHref = `mailto:${settings.email}`;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -618,14 +621,16 @@ export function TravelNav() {
       >
         {/* Top announcement bar */}
         <div className="top-bar">
-          <span className="top-bar-message">✈️ Exclusive deals on Pakistan &amp; International tours</span>
+          <span className="top-bar-message">✈️ {settings.promoBarText}</span>
           <div className="top-bar-divider" />
-          <a href="tel:+923001234567" className="top-bar-phone">
+          <a href={phoneHref} className="top-bar-phone">
             <PhoneIcon />
-            +92 300 1234567
+            {settings.phone}
           </a>
           <div className="top-bar-divider top-bar-extra" />
-          <span className="top-bar-extra">✉ travel@square360.com</span>
+          <a href={mailHref} className="top-bar-extra">
+            ✉ {settings.email}
+          </a>
         </div>
 
         {/* Main navigation */}
